@@ -1,7 +1,7 @@
 import requests
 from pprint import pprint
 
-API_KEY = 'sfFNDf1PoK%2BdqwHmc0YZcZ8SwkwDaahw710hrP2hqRLFXmxIF0B6Qdo%2F5ReDTc4v7H1d1lT3lgNL3JndpputGQ%3D%3D'
+API_KEY = 'private'
 url = f'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey={API_KEY}&returnType=json&numOfRows=10&pageNo=1&sidoName=%EC%84%9C%EC%9A%B8&ver=1.0'
 response = requests.get(url).json()
 
