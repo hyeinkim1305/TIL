@@ -1,8 +1,8 @@
 import requests
 
 # https://core.telegram.org/bots/api 여기서 making requests 줄이랑 텔레그램에서 토큰값 가져옴 
-TOKEN = '1553753815:AAEQ_zGf9fxnduSb6K8P0oGs7YiCk7H4kMU'
-CHAT_ID = '1408887106'
+TOKEN = 'Telegram Token 비공개'
+CHAT_ID = 'Telegram ID 비공개'
 # text = '안녕하세요'
 
 import requests
