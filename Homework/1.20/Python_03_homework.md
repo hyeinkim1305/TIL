@@ -11,6 +11,8 @@ sum()
 str()
 range()
 list()
+또는
+print(dir(__builtins__))
 ```
 
 
@@ -30,7 +32,7 @@ def get_middle_char(s):
 
 여기 num-1, num+1 부분 잘 보기! 헷갈리지 말기
 
-
+문자열도 인덱싱 접근이 가능한거 명심 !
 
 ### 3. 
 
@@ -43,7 +45,7 @@ def get_middle_char(s):
 ### 4. 
 
 ```
-none
+None
 ```
 
 
@@ -59,5 +61,17 @@ def my_avg(*args):
         avg = result / len(args) 
 
     return avg
+```
+
+```
+# sol2
+def my_avg(*arg):
+    sum_arg = 0
+    count = 0
+    for i in arg:
+        sum_arg += i
+        count += 1
+    return sum_arg / count
+print(my_avg(77, 83, 95, 80, 70))
 ```
 
