@@ -39,6 +39,13 @@ def dict_list_sum(n):
     for i in n:
         result += i['age']
     return result
+    
+# sol3
+def dict_list_sum(num):
+    result = 0
+    for i in num:
+        result += i.get('age')
+    return result
 
 ```
 
@@ -61,5 +68,13 @@ def all_list_sum(my_list):
         for num in mymy_list:
             total += num
     return total
+    
+# sol3
+def all_list_sum(num):
+    result = 0
+    for i in num:
+        for j in i:
+            result += j
+    return result
 ```
 
