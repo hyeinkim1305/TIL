@@ -6,6 +6,8 @@
 circle = Circle(3,2,4)
 circle.area()
 circle.circumference()
+
+# self.pi는 Circle.pi 이런식으로 해야한다. 클래스변수이니까 // 음 self.x 이런거는 변수가 되는 듯한 느낌이넹! 
 ```
 
 
@@ -15,22 +17,22 @@ circle.circumference()
 ```python
 class Dog(Animal):
     
-    def __inint__(self, name):
-        super().__init__(name)
+    def __init__(self, name):
+        super().__init__(name)  #여기서는 이거를 안써도 되기는 함. 그런데 만약 부모클래스에 있는 name외에 다른 것을 더 넣으려고 한다면 이거는 부모에 있는거를 긁어오는 느낌이니까 쓰는 것이 좋다 (convention)
         
     def bark(self):
         print(f'{self.name}! 짖는다!')
         
-    def walk(self):
+    def walk(self):    # 오버라이딩
         print(f'{self.name}! 달린다!')
 
         
 class Bird(Animal):
     
-    def __inint__(self, name):
+    def __init__(self, name):
         super().__init__(name)
         
-    def eat(self):
+    def eat(self):     # 이거는 재정의할 필요가 없다!!
         print(f'{self.name}! 먹는다!')
         
     def fly(self):

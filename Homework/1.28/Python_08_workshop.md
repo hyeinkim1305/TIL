@@ -26,5 +26,17 @@ class Rectangle(Point):
             return True
         else:
             return False
+        
+# 교수님 풀이
+class Rectangle(Point):
+    
+    def __init__(self, a, b):  # 여기 a, b잘보기 나는 안했음 이거를 !
+        self.p1 = a
+        self.p2 = b
+        self.width = (self.p2.x - self.p1.x)   # 이런 식으로 해도 된다!
+        self.height = (self.p1.y - self.p2.y) 
+        
+        
+    .....
 ```
 

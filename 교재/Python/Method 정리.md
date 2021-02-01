@@ -1,4 +1,4 @@
-# Method 정리
+# Method 정리 / 한번씩 영향미치는건 뭐지?
 
 # (순서 : Str -> List -> Set -> Dict)
 
@@ -25,6 +25,8 @@ string, tuple, range는 immutable 변경불가능한 변수
   - count를 지정하면 해당 갯수 만큼만 시행합니다.
 
     `z = 'zoo!yoyo!' z.replace('o','') => 'z!yy!' z.replace('o','',2) =. 'z!yoyo!'`
+    
+  - **count를 지정하지 않으면 다 바꿔버린다!! 주의**
 
 - .strip([chars])
 

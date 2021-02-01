@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h2 {
+      color: darkviolet !important;
+    }
+
+    p {
+      color: orange;
+    }
+    
+    .blue {
+      color: blue;
+    }
+
+    .green {
+      color: green;
+    }
+
+    #red {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <p>1</p>
+  <p class="blue">2</p>
+  <!-- 아래에 있는 코드로 되었네! -->
+  <p class="blue green">3</p>
+  <p class="green blue">4</p>
+  <!-- id가 더 우선순위이니까! -->
+  <p id="red" class="blue">5</p>
+  <!-- important로 해줘서 보라색 -->
+  <h2 id="red" class="blue">6</h2>
+  <!-- 인라인이 클래스보다 높아서? -->
+  <p id="red" class="blue" style="color: yellow;">7</p>
+  <!-- h2라서 사이즈 큰 듯, 그리고 보라색은 imortannt라서  -->
+  <h2 id="red" class="blue" style="color: yellow;">8</h2>
+</body>
+</html>

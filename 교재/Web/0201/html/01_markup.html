@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>학생 건강 설문</title>
+</head>
+<body>
+  <!-- header 태그는 상단 영역 -->
+  <header>
+    <!-- 싸피 홈페이지로 이동하는 링크 -->
+    <a href="https://www.ssafy.com">
+      <!-- image 같은 폴더에 넣어야함 -->
+      <!-- alt는 이미지 깨질때 나오는 문자열 -->
+      <!--이미지 소스의 URL을 명시한다. 절대주소 또는 상대주소-->
+      <img src="sns_img.png" alt="싸피 로고">
+    </a>
+    <h1>학생 건강 설문</h1>
+  </header>
+
+  <section>
+    <!-- 건강 설문 작성 form -->
+      <!-- action은 기본 경로 같은 느낌이라 필수 -->
+    <form action="#">
+      <div>
+        <!-- label의 for과 input의 id 연결됨 -->
+        <label for="name">이름을 기재해주세요.</label><br>
+        <input type="text" id="name" autofocus>
+      </div>
+      <!-- 가로에 구분선 -->
+      <hr>
+      <div>
+        <!-- label의 for과 select의 id 연결됨 -->
+        <label for="region">지역을 선택해주세요.</label><br>
+        <select name="region" id="region">
+          <option value="서울" disabled>서울</option>
+          <option value="대전">대전</option>
+          <option value="광주">광주</option>
+          <option value="구미">구미</option>
+        </select>
+      </div>
+      <hr>
+      <div>
+        <p>오늘의 체온을 선택해주세요.</p>
+        <!--value랑 for랑 연결 // type이 동그랑이 모양-->
+        <!--동그랑이가 있고 나서 글이 있다-->
+        <input type="radio" id="normal" name="body-heat" value="normal" checked>
+        <label for="normal">37.5도 미만</label>
+        <input type="radio" id="warning" name="body-heat" value="warning">
+        <label for="warning">37.5도 이상</label>
+      </div>
+      <!-- submit모양이 버튼 모양인 것-->
+      <hr>
+      <input type="submit" value="전송!!">
+    </form>
+  </section>
+
+  <footer>
+    Google 설문지를 통해 비밀번호를 제출하지 마시오.
+  </footer>
+</body>
+</html>
