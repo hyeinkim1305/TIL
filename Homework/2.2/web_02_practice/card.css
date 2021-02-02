@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 1200px;
+  /* 상하로 200 여백 */
+  margin: 200px auto;
+  
+}
+
+h4{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card{
+  width: 700px;
+  border: 2px dashed black;
+  /* 가운데정렬 */
+  margin: auto;
+}
+
+.card-nav{
+  background-color: forestgreen;
+  text-align: center;
+}
+
+.card-header{
+  padding: 18px;
+}
+
+.card-img{
+  /* block으로 해서 다 먹을 수 있게 한다. */
+  /* block으로 하면 세미한 한 줄이 사라짐 */
+  display: block;
+  width: 100%;
+  height: 330px;
+}
+
+.card-img-description{
+  height: 70px;
+  background-color: forestgreen;
+  color: white;
+  text-align: center;
+  /* 세로 가운데 정렬 */
+  line-height: 35px;
+
+}
+
+.card-body{
+  /* padding은 중첩되지 않기 때문에 위에 있는 18px과 합쳐져서 여기서 18로 해도 됨. */
+  padding: 18px;
+}
+
+/* box model이랑 비슷하게 한다. */
+.card-body-title {
+  position: relative;
+}
+
+.card-body-title > h4{
+  /* 좌측에 붙는 애니까 inline만 하면 됨 */
+  display: inline;
+}
+
+.card-body-title > p{
+  /* relative 기준으로 맨 오른쪽 */
+  display: inline;
+  position: absolute;
+  right: 0px;
+  
+}
+
+.card-body-content{
+  /* margin도 넣어야 하고 padding도 넣어야 하고  */
+  margin: 10px;
+  padding: 10px;
+  background-color: wheat;
+
+}
+
+.card-footer{
+  background-color: green;
+  font-weight: bold;
+  text-align: right;
+  color: white;
+  height: 30px;
+  padding: 5px;
+
+}
