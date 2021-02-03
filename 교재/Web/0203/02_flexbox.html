@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" href="02_flexbox.css">
+  <title>Document</title>
+  <style>
+    .flex-container {
+      /* 모든 요소는 부모에서 조작되는 것, 그러나 self만 별개적으로 개별 요소에서 작성한다. 개별요소에서 작동하는 것이기 때문 */
+      /* 정렬하려고하는 부모 요소에 display: flex 선언! */
+      display: flex;
+
+      /*요소들이 강제로 한줄에 배치되게 할 것인지 여부 결정*/
+      /* 초과되어도 감싸지 않는다
+      flex-wrap: nowrap; */
+      /* 초과되면 아래로 옮겨서 감싼다. */
+      flex-wrap: wrap;
+      /* 아래 위 반대로 감싼다. */
+      /* flex-wrap: wrap-reverse; */
+
+
+      /*메인축 방향 결정 : 쌓이는 방향 결정 (주의 : 메인축의 방향만 바뀐다.)*/
+      /* 왼쪽에서 오른쪽으로 쌓인다. */
+      flex-direction: row;
+      /* 오른쪽부터 쌓인다.
+      flex-direction: row-reverse; */
+      /* 위에서 아래로 쌓인다. */
+      /* flex-direction: column;
+      아래에서 위로 쌓인다. */
+      /* flex-direction: column-reverse; */
+
+
+      /* flex-direction과 flex-wrap의 shorthand
+      flex-flow: column wrap; */
+
+
+      /* 메인축정렬 */
+      /* 기본값 */
+      justify-content: flex-start;
+      /* row-reverse는 시작점이 축의 맨 오른쪽이었다면 flex-end는 시작점이 왼쪽인 상태에서 위치가 오른쪽 끝올 간것! 즉 방향은 일치된 상태에서 위치가 끝으로
+      justify-content: flex-end;
+      수평 가운데 정렬
+      justify-content: center;
+      양쪽으로 찢은 뒤 간격을 동일하게 맞춤
+      justify-content: space-between;
+      균등 좌우 정렬, 외곽요소의 넓이에 비해 가운데 넓이가 2배이다.
+      justify-content: space-around;
+      위에 비해 내부 요소의 여백과 외곽요소의 여백이 균등
+      justify-content: space-evenly; */
+
+      
+      /* 교차축정렬
+      메인이 왼>오 이니까 교차는 수직된 방향
+      여기서는 교차축입장에서는 한줄 정렬, 메인축 입장에서는 여러줄 정렬
+      이게 기본값
+      align-items: stretch;
+      align의 기본값은 flex-start가 아님 왜냐면 이거 높이가 사라짐
+      align-items: flex-start;
+      아래로 온다
+      align-items: flex-end;
+      가운데로 온다.
+      align-items: center;
+      폰트기준으로 정렬
+      align-items: baseline; */
+
+    }
+
+
+    /* flex-grow는 item들의 상대적인 크기로 결정되는 것이 아니고, 사용하기 전 있던 여백 공간을 해당 크기만큼 할당하는것. 따라서 음수는 올 수 없다.  */
+    .item1 {
+      /* order는 작은 숫자 일수록 우선순위가 높다 */
+      /* order의 기본 값은 다 0이다 */
+      /* order: 0; */
+      /* align-self: flex-start; */
+
+      /* 주축에서 남는 공간을 항목들에게 분배 */
+      /* flex-grow: 1; */
+    }
+
+    .item2 {
+      /* align-self: center; */
+      /* 왼쪽으로 이동 */
+      /* order: -1; */
+      /* flex-grow: 2; */
+    }
+
+    .item3 {
+      /* align-self: flex-end; */
+      /* 기본값이 0이니까 1하면 맨 뒤로 가게 됨. */
+      /* order: 1; */
+      /* flex-grow: 3; */
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <div class="base">
+    <h2>Flex</h2>
+    <hr>
+    <!-- flex만 선언했을 때는 위에서 아래로 있던 요소들이 왼쪽에서 오른쪽으로 정렬됨. -->
+    <div class="box flex-container">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+      <div class="item4">4</div>
+      <div class="item5">5</div>
+      <div class="item6">6</div>
+      <div class="item7">7</div>
+      <div class="item8">8</div>
+      <div class="item9">9</div>
+      <div class="item10">10</div>
+      <div class="item11">11</div>
+      <div class="item12">12</div>
+      <div class="item13">13</div>
+    </div>
+  </div>
+</body>
+
+</html>
