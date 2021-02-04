@@ -6,6 +6,11 @@
   <title>Document</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <style>
+
+    body {
+      height: 5000px;
+    }
+
     .box {
       width: 100px;
       height: 100px;
@@ -36,6 +41,7 @@
 
   <h2>2. Color</h2>
   <!-- background color로 들어간다 -->
+  <!-- box모양 안주면 한 줄을 다 먹는다! -->
   <div class="bg-primary">이건 배경 파란색</div>
   <div class="bg-success">이건 배경 초록색</div>
   <div class="bg-warning">이건 배경 노란색</div>
@@ -53,7 +59,23 @@
   
   <span class="d-block p-2 d-sm-none d-md-block bg-primary text-white">d-block</span>
   <span class="d-block p-2 d-md-none d-lg-block bg-dark text-white">d-block</span>
-  
+  <p class="fw-bold">Bold text.</p>
+  <p class="fw-normal">Normal weight text.</p>
+  <p class="fw-light">Light weight text.</p>
+  <p class="fst-italic">Italic text.</p>
+
+
+  <hr>
+
+  <h2>Display</h2>
+  <div class="d-inline p-2 bg-primary text-white">d-inline</div>
+  <div class="d-inline p-2 bg-dark text-white">d-inline</div>
+  <span class="d-block p-2 bg-primary text-white">d-block</span>
+  <span class="d-block p-2 bg-dark text-white">d-block</span>
+  <div class="box bg-warning d-sm-none d-md-block">보이나?? 안보이나??</div>
+  <div class="box bg-success d-md-none d-xl-block">보이나?? 안보이나??</div>
+
+
   <h2>fixed-top</h2>
   <div class="fixed-top box">top</div>
   <div class="fixed-bottom box">bottom</div>

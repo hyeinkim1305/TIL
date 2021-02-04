@@ -7,9 +7,15 @@
   <title>Document</title>
 
   <style>
+
+    body {
+      height: 3000px;
+    }
+
     .box {
       background-color: wheat;
       border: 1px solid black;
+      text-align: center;
     }
 
     .parent {
@@ -29,6 +35,7 @@
     <h2 class="text-center">column</h2>
     <div class="row">
       <!-- col-2이런식으로 하면 12를 나눠서 가져짐 -->
+      <!-- 아 박스가 있다 여기!! -->
       <div class="box col">1</div>
       <div class="box col">2</div>
       <div class="box col">3</div>
@@ -36,7 +43,7 @@
     <hr>
 
 
-
+    <!-- 이것도 지금 저 위에 container 안에 들어있다! -->
     <div class="row">
       <div class="box col">1</div>
       <div class="box col">2</div>
@@ -102,6 +109,7 @@
 
 
     <!-- 한 요소 안에서 다시 나누는 것 해보기. 중첩된 그리드 -->
+    <!-- 한번 다시 row, col을 해준다! -->
     <h2>nesting</h2>
     <div class="row">
       <div class="box col-6">
@@ -122,11 +130,10 @@
     <!-- 왼쪽에 여백 주고 나서부터 시작하고 싶으면 -->
     <!-- offset으로 시작점 조정 -->
     <!-- 코드 수정해야할듯 -->
-    <h2>offset</h2>
+    <h2 class="text-center">offset</h2>
     <div class="row">
-      <div class="box col-md-4 offest-4">1</div>
-      <div class="box col-4">2</div>
-      <div class="box col-md-4 offset-md-4 offset-lg-2">2</div>
+      <div class="box col-md-4 offset-4">.col-md-4 .offset-4</div>
+      <div class="box col-md-4 offset-md-4 offset-lg-2">.col-md-4 .offset-md-4 .offset-lg-2</div>
     </div>
     <hr>
 

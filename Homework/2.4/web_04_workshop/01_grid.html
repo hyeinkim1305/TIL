@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <title>practice1</title>
+</head>
+<!-- CDN은 두개 넣는 것이다 위에 링크 아래 src! -->
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Bootstrap Grid System 1</h1>
+      </div>
+    </div>
+
+    <!-- 1. -->
+    <div class="row">
+      <div class="item col">
+        <p>4개</p>
+      </div>
+      <div class="item col">
+        <p>4개</p>
+      </div>
+      <div class="item col">
+        <p>4개</p>
+      </div>
+    </div>
+
+    <!-- 2. -->
+    <div class="row">
+      <div class="item col">
+        <p>6개</p>
+      </div>
+      <div class="item col">
+        <p>6개</p>
+      </div>   
+    </div>
+
+    <!-- 3. -->
+    <div class="row">
+      <!-- col-3은 col로만 해도 된다! 왜냐면 남은 영역을 골고루 가져가니까 -->
+      <div class="item col-3">
+        <p>1개</p>
+      </div>
+      <div class="item col-6">
+        <p>1개</p>
+      </div>
+      <div class="item col-3">
+        <p>1개</p>
+      </div>
+    </div> 
+    
+    <!-- 4. -->
+    <div class="row">
+      <div class="item col-2">
+        <p>4개</p>
+      </div>
+      <div class="item col-7">
+        <p>4개</p>
+      </div>
+      <div class="item col-3">
+        <p>4개</p>
+      </div> 
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
