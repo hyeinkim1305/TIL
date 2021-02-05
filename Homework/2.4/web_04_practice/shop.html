@@ -19,21 +19,27 @@
     </ul>
   </nav>
 
+
+  <!-- Nav이후를 container로 감쌌다. -->
   <div class="container">
     <!-- section -->
     <!-- Nav로 가져다가 써도 된다. -->
     <section>
       <!-- h 굳이 안줘도 된다! -->
+      <!-- w-100 아니면 img-fluid 주면 되는 듯! -->
       <img src="images/main.png" alt="main image" class="w-100 p-2">
       <div class="bg-white p-5">
         <h3 class="fw-bold text-dark text-center">Our New Products</h3>
       </div>
     </section>
 
+
+
     <!-- article -->
     <!-- text-center는 상속이 되니까 article에 넣어두 된다! -->
     <!-- 교수님 풀이! 카드에 링크되게 하고, flex이런거 굳이 안씀 -->
     <!-- 나는 버즈에 a 태그 써서 text-center가 안먹혀서 flex 썻음! -->
+    <!-- 카드 전체에 하이퍼링크 하려면 a로 카드를 묶는다. -->
     <!-- <a class="col text-decoration-none text-dark">
       <div class="card">
         <img src="images/buds.jpg" class="card-img-top" alt="...">
@@ -43,13 +49,12 @@
         </div>
       </div>
     </a> -->
-
-
     <article>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         <div class="col">
           <div class="card">
             <img src="images/buds.jpg" class="card-img-top" alt="...">
+            <!-- 이렇게 해야 세로로 정렬되어있는게 가로로 흐트러지지 않음. 세로방향 유지하면서 가운데 정렬  -->
             <div class="fw-bold card-body d-flex flex-column align-items-center">
               <a href="#" class="text-dark text-decoration-none">Buds</a>
               <p class="card-text">179,000</p>

@@ -260,7 +260,7 @@ flex-flow: row nowrap;
 - 왜 12 columns 일까 ?
   - 12는 약수가 가장 많기 때문에 한 줄에 표시할 수 있는 종류가 제일 많다.
 - 다음과 같은 구조로 사용한다.
-  - .container > .row > col-*
+  - .container > .row > col-* 매우 중요!!!
 
 <br>
 

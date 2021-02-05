@@ -12,6 +12,16 @@
 
 - 시작할 때 CDN 링크 받아오는거 해야함 !!
 
+- md, sm, lg 이런거는 768이상이면 다 해당되는 것, 따라서 각 기준점마다 해줄 필요는 없음. 
+
+- 대표적인 블록레벨 요소
+
+  - div / ul , ol, li / p / hr / form
+
+- 대표적인 인라인레벨 요소
+
+  - span / a / img / input, lable / b , em, i, string 
+
 ##### flex box
 
 - container로 item들을 조작한다.
@@ -92,3 +102,56 @@ bootstrap
   - Components > Badge
   - Components > Collapse, Pagination, Progress, Togle, Dropdown
   - Gutters도 유용할듯!
+
+
+
+
+
+##### CSS 애니메이션
+
+```css
+move는 함수 이름
+@keyframes move{
+    0%
+    {
+        margin-left: 0px;
+    }
+    100% {
+        
+    }
+}
+```
+
+![image-20210205094459633](0_Web_헷갈리는거정리.assets/image-20210205094459633.png)
+
+![image-20210205094612436](0_Web_헷갈리는거정리.assets/image-20210205094612436.png)
+
+![image-20210205094625392](0_Web_헷갈리는거정리.assets/image-20210205094625392.png)
+
+![image-20210205100045834](0_Web_헷갈리는거정리.assets/image-20210205100045834.png)
+
+- style.css = 애니메이션
+
+- 구글폰트 = 폰트 (select this style > head에 title밑에다가 넣음 > ), 아래 사진 참고
+
+![image-20210205101649858](0_Web_헷갈리는거정리.assets/image-20210205101649858.png)
+
+- 아이콘 = 부트스트랩, font awesome
+
+- 접근성 향상 = 아이콘 기호 안에 span으로 글자 넣어줌 
+
+
+
+##### PJT 03 참고사항
+
+- 로그인- 모달
+- Nav 상단 고정 : fixed top
+  - 로고 이미지 링크로 
+  - ul과 li태그 다시 이용 + flex + 부트스트랩 이용하기  (homework 교수님 코드 참고)
+  - 햄버거 버튼 교체 
+  - 디테일 요소들은 알아서
+- 본문 > card, carousel, 
+- 푸터 
+- 커뮤니티 
+  - 리스트, table(Content), 
+

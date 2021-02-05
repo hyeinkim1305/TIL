@@ -16,7 +16,9 @@ nav img {
 }
 
 header {
+  /* 700px를 줬으니까 그 글자 배열이 중앙이 되게 하는 flex가 잘 적용이 되는거네! */
   height: 700px;
+  /* 오 background image와 size 이런게 있군! */
   background-image: url('images/header.jpg');
   background-size: cover;
 }

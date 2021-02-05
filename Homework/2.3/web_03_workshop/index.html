@@ -20,6 +20,7 @@
     </a>
     <!-- list-unstyled는 리스트 앞에 동그라미 없애는 것 -->
     <!-- d-flex만 해도 default인 좌우정렬이 되니까 여기서 굳이 align-items-center할 필요는 없다. -->
+    <!-- ul 안에 li 넣어줌  -->
     <ul class="d-flex mb-0 list-unstyled">
       <!-- 좌우 마진은 중첩되지 않으니까 왼쪽 오른쪽에서 1rem씩 주면 된다. x로 하면 왼쪽, 오른쪽!!!나는 못했음 이거 -->
       <li class="px-3"><a href="#" class="text-decoration-none text-white">Home</a></li>
@@ -44,6 +45,8 @@
     <!-- justify-content-between, evenly, around 세가지 줘도 상관없음! 이미지 간격 동일하니까 -->
     <article class="d-flex justify-content-evenly">
       <div class="text-center">
+        <!-- div로 이미지랑 글자를 묶었기 때문에 같이 다닌다! -->
+        <!-- text-center는 상속이 된다. -->
         <img src="images/web.png" alt="Web Image">
         <p>Web</p>
       </div>
