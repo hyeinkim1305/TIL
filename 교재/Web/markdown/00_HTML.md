@@ -90,6 +90,20 @@
 
   : action, method
 
+- 대표적인 블록레벨 요소
+
+  - div / ul , ol, li / p / hr / form
+
+- 대표적인 인라인레벨 요소
+
+  - span / a / img / input, lable / b , em, i, string 
+  
+- ul, ol, li 태그 차이
+
+  - ol은 순서가 있는 목록을 만들 때 사용
+  - ul은 순서가 필요 없는 목록 만들 때 사용
+  - li는 ol, ul 의 각 항목들을 나열할 때 사용
+
 
 
 ##### 추가

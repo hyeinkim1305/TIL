@@ -48,6 +48,8 @@
 > 일명 flexbox라 불리는 Flexible Box module은 flexbox 인터페이스 내의 아이템 간 공간 배분과 강력한 정렬 기능을 제공하기 위한 1차원 레이아웃 모델로 설계되었다.
 >
 > 웹페이지의 컨테이너에 아이템의 폭과 높이 또는 순서를 변경해서 웹페이지의 사용 가능한 공간을 최대한 채우고 이를 디바이스 종류에 따라 유연하게 반영하도록 하는 개념
+>
+> 연습해볼만한 것 : flexboxfroggy
 
 
 
@@ -76,6 +78,7 @@
   - item은 주축의 시작 선에서 시작
   - item은 교차축의 크기를 채우기 위해 늘어남
   - `flex-wrap` 속성은 `nowrap`으로 지정
+- 부모요소에 display flex를 선언하면 그 안에 요소들이 flex item으로 변경이 되는 것
 
 <br>
 
@@ -163,6 +166,7 @@ flex-flow: row nowrap;
 - center
 - baseline
   - item 내부의 text에 기준선을 맞춤
+- baseline과 stretch의 차이는 baseline은 컨테이너의 시작위치에 정렬, stretch는 컨테이너에 맞게 늘림
 
 <br>
 
@@ -209,7 +213,14 @@ flex-flow: row nowrap;
   d-flex flex-column 하고 align-items-center 하면 된다. 
   ```
 
-- 
+
+--------------------------------------------------------------------
+
+##### 미디어 쿼리 : 부트스트랩보다 어려워! 따라서 되도록 부트스트랩을 이용하는 것이 쉽다
+
+- CSS내 문법, 반응형 디자인의 핵심 요소 원리
+
+
 
 <br>
 
@@ -220,6 +231,8 @@ flex-flow: row nowrap;
 ## Bootstrap
 
 > The most popular HTML, CSS, and JS library in the world.
+>
+> responsive 반응형 :  어떤 디바이스로 들어와도 볼 수 있다. 
 
 > 주의할점
 >
@@ -255,12 +268,15 @@ flex-flow: row nowrap;
 
 **Grid System**
 
+- 유용하게 사용 가능
+
 - 부트스트랩의 grid system 은 containers, rows 그리고 columns 를 사용해서 컨텐츠를 레이아웃하고 정렬한다.
 - 모바일 우선 flexbox grid 를 사용하여 12개의 column 시스템을 가지고 있다.
 - 왜 12 columns 일까 ?
   - 12는 약수가 가장 많기 때문에 한 줄에 표시할 수 있는 종류가 제일 많다.
 - 다음과 같은 구조로 사용한다.
   - .container > .row > col-* 매우 중요!!!
+  - row, col3는 하나의 행에 열이 3개
 
 <br>
 
@@ -304,6 +320,42 @@ flex-flow: row nowrap;
 ---
 
 <br>
+
+## Bootstrap Display
+
+##### Display
+
+- d-sm-non : sm이상 넘어가면 none이 된다.
+
+- d-md-block : width가 md이상이 되면 block이 되게 하겠다. (block : 다시 보인다. 블럭속성 회복)
+
+  
+
+## 자주 쓸만한 부트스트랩 클래스
+
+- container : 기본으로 많이 쓰는듯 /컨텐츠를 포함, 중앙배치 등등 이용
+
+- Components > modal : 팝업창/여러개 가능은 한데 button의 data-bs-target값과 class의 id가 같아서 팝업창이 동일한거로 뜰 수 있음 / 각각 서로 일치시켜야함 
+- Components > Carousel : 이미지넘기기/추가로 이미지 넣어줘야함 / id랑 href 가 일치 / carousel이 여러개 쓴다면 id가 각각 일치
+- Components > Grid Card : 카드가 한 화면에 여러개 / row-clos-md-2이면 md이상이면 카드 2개 보여준다 /  g-4는 카드들 사이 간격, (margin, padding을 적절하게 처리한 것)  / g를 없애면 p는 좌우에 기본적으로 들어가있기 때문에  상하에 간격이 없어진다. / g-0을 하면 p도 없어져서 서로 다닥다닥 붙음.
+- Components > Badge
+- Components > Collapse, Pagination, Progress, Togle, Dropdown
+- Gutters도 유용할듯!
+
+
+
+## CSS 애니메이션
+
+```css
+0205 코드 참고
+```
+
+- 구글 폰트 : 폰트 (select this style > head에 title밑에다가 넣음 > ) // 코드 참고
+- 아이콘 : 부트스트랩, font awesome
+- 접근성 향상 : 아이콘 기호 안에 span으로 글자 넣어줌
+- 
+
+
 
 ## 마무리
 
