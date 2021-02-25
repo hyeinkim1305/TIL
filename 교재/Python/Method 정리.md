@@ -214,3 +214,15 @@ string, tuple, range는 immutable 변경불가능한 변수
 
 
 * 결과는 튜플의 모음으로 구성된 `zip object` 를 반환한다.
+
+
+
+## 기타 다른 함수들, 표현들
+
+- max, min
+- sum
+- sorted(a), sorted(a, reverse = True)
+- enumerate
+- [::-1], [0::2]       ->      0부터 끝까지 2씩 건너뛰어서
+- .count('a')      ->      a 개수
+- key = lambda x : x[0]     ->  x[0] 을 기준으로 정렬
