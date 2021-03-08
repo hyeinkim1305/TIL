@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+{% comment %} 부모템플릿의 경로를 작성해줘야해 {% endcomment %}
+{% comment %} 공통적인 부분은 재사용하는 것 {% endcomment %}
+{% block content %}
+  <h1>만나서 반가워요!!</h1>
+  <a href="{% url 'articles:greeting' %}">greeting</a>
+  <a href="{% url 'articles:dinner' %}">dinner</a>
+  <a href="{% url 'articles:throw' %}">throw</a>
+{% endblock %}

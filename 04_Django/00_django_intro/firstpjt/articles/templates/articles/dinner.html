@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>오늘 저녁은 {{ pick }}!!!</h1>
+  {% comment %} 글자수를 나타내주는건 length {% endcomment %}
+  <p>{{ pick }}은 {{ pick|length }}</p>
+  {% comment %} 2개 까지만 보여주고 말줄임표로 표시할 때 이렇게 한다. {% endcomment %}
+  <p>{{ foods|truncatewords:2 }}</p>
+  {% comment %} 단어 단위로 몇개까지만 표시 {% endcomment %}
+  <p>{{ foods|truncatechars:10 }}</p>
+  {% comment %} foods 리스트 안에 요소들을 문자형태로 바꾸고자 할 때 {% endcomment %}
+  <p>{{ foods|join:", " }}</p>
+  <p>메뉴판</p>
+  <ul>
+    <!-- 이거는 태그 -->
+    {% for food in foods %}   
+      <!-- 이거는 변수 -->
+      <li>{{ food }}</li>
+    {% endfor %}
+  </ul>
+  {# 이것은 주석입니다 #}
+  {% comment %}
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+  {% endcomment %}
+</body>
+</html>
+
+{% comment %} html 주석과 Django 주석 모두 사용 가능 {% endcomment %}
