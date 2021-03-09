@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>로또 당첨 횟수를 알아보자.</h1>
+  <hr>
+  <h3>이번 회차 당첨 번호 : {{ num }} + {{ vonus_num }}</h3>
+  <ul>
+    {% comment %} {% for key, value in rank.items %}
+      <li>{{ key }} : {{ value }}</li>    <!--이렇게 dict로 할 수 있음-->
+    {% endfor %} {% endcomment %}
+    <li>1등 : {{ rank.0 }}번</li>
+    <li>2등 : {{ rank.1 }}번</li>
+    <li>3등 : {{ rank.2 }}번</li>
+    <li>4등 : {{ rank.3 }}번</li>
+    <li>5등 : {{ rank.4 }}번</li>
+    <li>꽝 : {{ rank.5 }}번</li>
+  </ul>
+  <hr>
+
+  {% comment %} <h3>1등이 당첨하려면 몇번이나 해야할까?</h3>
+  <h5>{{ first }}번</h5> {% endcomment %}
+  
+</body>
+</html>
+

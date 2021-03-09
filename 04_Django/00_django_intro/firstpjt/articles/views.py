@@ -51,3 +51,44 @@ def introduce(request, name, age):
     }
     return render(request, 'articles/introduce.html', context)
 
+# 이미지 랜덤으로 보여주는 페이지
+def image(request):
+    return render(request, 'articles/image.html')
+
+# 페이크구글
+def fakegoogle(request):
+    return render(request, 'articles/fakegoogle.html')
+
+# 숫자 두개 곱할거 받는 함수
+def multiple(request):
+    return render(request, 'articles/multiple.html')
+# 숫자 두개 곱하고 보여주는거
+def multiple_catch(request):
+    multiple1 = request.GET.get('multiple1')        # request중에 multiple1이라고 온거 받아
+    multiple2 = request.GET.get('multiple2')
+    ans = int(multiple1) * int(multiple2)
+    context = {
+        'answer' : ans
+    }
+    return render(request, 'articles/multiple_catch.html', context)
+# 숫자 두개 받아서 곱하는거 교수님풀이
+def multiply(request, num1, num2):
+    result = num1 * num2
+    context = {
+        'num1' : num1,
+        'num2' : num2,
+        'result' : result,
+    }
+    return render(request, 'articles/multiply.html', context)
+
+
+def dtl_practice(request):
+    foods = ['감자탕', '초밥', '치킨', '갈비탕', '파스타']
+    fruits = ['키위', '망고', '파인애플', '귤']
+    user_list = []
+    context = {
+        'foods' : foods,
+        'user_list' : user_list,
+        'fruits' : fruits,
+    }
+    return render(request, 'articles/dtl_practice.html', context)

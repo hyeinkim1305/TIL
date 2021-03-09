@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>숫자를 두개 입력하시오</h1>
+  <form action="{% url 'articles:multiple_catch' %}" mathod="GET">
+    <input type="text" name="multiple1">
+    <input type="text" name="multiple2">
+    <input type="submit">
+  </form>
+
+{% endblock content %}
+
+
+

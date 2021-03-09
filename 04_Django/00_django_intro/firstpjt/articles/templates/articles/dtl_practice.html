@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h3>1. for</h3>
+  {% for food in foods %}
+    <!--forloop은 반복을 몇번 돌고 있는건지 보여줌, counter0을 널어주면 0부터 시작-->
+    <p>{{ forloop.counter0 }} {{ food }}</p>
+  {% endfor %}
+
+  {% for user in user_list  %}
+    <p>{{ user }}</p>
+  {% empty %}
+  <p>지금 가입한 유저가 없습니다.</p>
+  {% endfor %}
+  <hr>
+  <h3>2. if</h3>
+  {% if '초밥' in foods %}
+    <p>초밥엔 간장을 찍어야지!</p>
+  {% endif %}
+
+  {% for food in foods  %}
+    {% if forloop.first %}  <!--forloop.last도 가능-->
+      <p>감자탕 + 겨자소스</p>  <!--감자탕대신 {{ food }}도 가능-->
+    {% else %}
+    <p>{{ food }}</p>
+    {% endif %}
+  {% endfor %}
+
+  <hr>
+  <h3>3. length filter 활용</h3>
+  {% for fruit in fruits  %}
+    {% if fruit|length > 3 %}
+      <p>이름이 너무 길어요</p>
+    {% else %}
+      <p>{{ fruit }}, {{ fruit|length }}</p>
+    {% endif %}
+  {% endfor %}
+  <hr>
+  <h3>4. lorem ipsum</h3>
+  {% lorem %}
+  <hr>
+  {% lorem 3 w%}  <!--3 words-->
+  <hr>
+  {% lorem 4 w random %}   <!--random하면 새로운 랜덤 글자-->
+  <hr>
+  {% lorem 2 p random %}   <!--두개의 새로운 문단-->
+  <hr>
+  {% lorem 1 b random %}    <!--p와 b는 비슷-->
+
+  <hr>
+  <h3>5. 글자 관련 필터</h3>
+    <p>{{ 'ABC'|lower }}</p>    <!--소문자변환-->
+    <p>{{ 'my_sentence'|title }}</p>    <!--제목처럼 바꿔줌-->
+    <p>{{ foods|random }}</p>   <!--random-->
+
+  <hr>
+  <h3>6. 연산</h3>
+    <p>{{ 4|add:6 }}</p>
+    <hr>
+
+  <h3>7. 날짜 표현</h3>
+  {% now "DATETIME_FORMAT" %} <br>
+  {% now "SHORT_DATETIME_FORMAT" %} <br>
+  {% now "DATE_FORMAT" %} <br>
+  {% now "SHORT_DATE_FORMAT" %}
+  <hr>
+  {% now "Y년 m월 d일 (D) A h:i" %}
+  <hr>
+  {% now "Y" as current_year %}   <!--current_year로 해서 부르겠다-->
+  Copyright {{ current_year }}
+
+
+
+
+{% endblock content %}
+
+
+
