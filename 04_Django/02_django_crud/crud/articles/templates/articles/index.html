@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Articles</h1>
+
+  <a href="{% url 'articles:new' %}">글작성</a>   <!--글작성버튼 생성-->
+  <hr>
+  {% for article in articles  %}
+    <h2>글 번호 : {{ article.pk }}</h2> <!--쿼리값 자체-->
+    <h2>글 제목 : {{ article.title }}</h2>   <!--즉 2개의 게시글을 모델에서 디비로 해서 가져옴-->
+    <h2>글 내용 : {{ article.content }}</h2>
+    <hr>
+  {% endfor %}
+  
+
+
+
+{% endblock content %}
+
+
+
