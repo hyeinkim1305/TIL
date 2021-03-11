@@ -2,14 +2,15 @@
 {% block content %}
 
   <h1>New</h1>
-  <form action="{% url 'articles:create' %}" method="GET">
+  <form action="{% url 'articles:create' %}" method="POST">
+    {% csrf_token %}
     <label for="title">TITLE : </label>
-    <input type="text", name="title", id="title"><br>
+    <input type="text" name="title" id="title"><br>
     <label for="content">CONTENT : </label>
     <textarea name="content" id="content" cols="30" rows="10"></textarea> <!--내용은 큰 인풋-->
     <input type="submit" value="작성">  
   </form>
   <hr>
-  <a href="{% url 'articles:index' %}">BACK</a>
+  <a href="{% url 'articles:index' %}">BACK</a>     <!--index라는 이름 설정해놔서 가능 !!-->
 
 {% endblock content %}

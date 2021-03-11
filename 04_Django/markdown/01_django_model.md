@@ -1,66 +1,66 @@
 # 02_django_model
 
-model
+### model
 
-웹 어플리케이션의 데이터를 구조화하고 조작하기 위한 도구
+> 웹 어플리케이션의 데이터를 구조화하고 조작하기 위한 도구
+>
+> 단일한 데이터에 대한 정보를 가짐 
+>
+> 저장된 데이터베이스의 구조
+>
+> 각각의 model은 하나의 데이터베이스 테이블에 매핑
+>
+> (model != database)
 
-단일한 데이터에 대한 정보를 가짐 
+----------------
 
-저장된 데이터베이스의 구조
+### 데이터베이스
 
-각각의 model은 하나의 데이터베이스 테이블에 매핑
+> 체계화된 데이터의 모임 
 
-(model != database)
+- 쿼리
 
+  데이터를 조회하기 위한 명령어
 
+- 구조
 
-데이터베이스
+  스키마
 
-체계화된 데이터의 모임 
+  ​	데이터베이스의 전반적인 자료 구조
 
-쿼리
+  테이블 
 
-데이터를 조회하기 위한 명령어
+  ​	필드 / 컬럼 / 속성
 
-구조
+  ​	레코드 / 행 / 튜플
 
-스키마
+  PK (기본키)
 
-데이터베이스의 전반적인 자료 구조
+  ​	데이터베이스 관리 및 관계 설정시 주요하게 활용됨
 
-테이블 
+----------------------
 
-필드 / 컬럼 / 속성
+### ORM
 
-레코드 / 행 / 튜플
+>  객체지향프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템(Django-SQL) 간에 데이터를 변환하는 프로그래밍 기술. 
 
-PK (기본키)
+- 장점
 
-데이터베이스 관리 및 관계 설정시 주요하게 활용됨
+  SQL을 잘 알지 못해도 DB조작이 가능
 
+  SQL의 절차적 접근이 아닌 객체 지향적 접근으로 인한 높은 생산성
 
+- 단점
 
-ORM
+  ORM만으로 완전한 서비스를 구현하기 어려운 경우가 있음 
 
-객체지향프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템(Django-SQL) 간에 데이터를 변환하는 프로그래밍 기술. 
+------------
 
-장점
+### migrations
 
-SQL을 잘 알지 못해도 DB조작이 가능
+> django가 model에 생긴 변화(필드를 추가했다던가 모델을 삭제했다던가 등)를 반영하는 방법
 
-SQL의 절차적 접근이 아닌 객체 지향적 접근으로 인한 높은 생산성
-
-단점
-
-ORM만으로 완전한 서비스를 구현하기 어려운 경우가 있음 
-
-
-
-migrations
-
-django가 model에 생긴 변화(필드를 추가했다던가 모델을 삭제했다던가 등)를 반영하는 방법
-
-migration 실행 및 DB 스키마를 다루기 위한 몇 가지 명령어
+##### migration 실행 및 DB 스키마를 다루기 위한 몇 가지 명령어
 
 makemigrations **
 
@@ -86,25 +86,23 @@ showmigrations
 >
 > 마이그레이션 파일들이 migrate 됐는지 안됐느지 여부를 확인할 수 있음 
 
+##### 반드시 기억해야 할 3단계
 
+> 1. models.py
+>
+>    model 변경사항 발생
+>
+> 2. python manage.py makemigrations
+>
+>    migrations 파일 생성
+>
+> 3. python manage.py migrate
+>
+>    DB 적용
 
-반드시 기억해야 할 3단계
+-------
 
-1. models.py
-
-   model 변경사항 발생
-
-2. python manage.py makemigrations
-
-   migrations 파일 생성
-
-3. python manage.py migrate
-
-   DB 적용
-
-
-
-Database API
+### Database API
 
 > DB와의 대화
 >
@@ -112,21 +110,17 @@ Database API
 >
 > django가 기본적으로 ORM을 제공함에 따른 것으로 DB를 편하게 조작할 수 있도록 도와줌 
 
-DB API 구문
+##### DB API 구문
 
 ClassName.Manager.QuerySetAPI
 
 > Article.objects.all()
 
-Manager
-
-
-
-CRUD
+##### CRUD
 
 > 대부분의 컴퓨터 소프트웨어가 가지는 기본적인 데이터 처리 기능인 Create, Read, Update, Delete 를 묶어서 일컫는 말
 
-create
+**create**
 
 ```
 
@@ -373,11 +367,7 @@ In [11]: article
 Out[11]: <Article: Article object (1)>
 ```
 
-![image-20210310133950458](02_django_model.assets/image-20210310133950458.png)
-
-![image-20210310134007949](02_django_model.assets/image-20210310134007949.png)
-
-위까지 총 3가지 방법
+총 3가지 방법
 
 ```
 # 1번째 방법
@@ -399,7 +389,7 @@ article 인스턴스 하나 당 테이플의 튜플 하나라고 생각하면 �
 
 ---------
 
-crude 에서 read는 2가지 (조회)
+**read (조회)**
 
 1. all
 
@@ -444,25 +434,23 @@ crude 에서 read는 2가지 (조회)
 
    하나의 쿼리셋에 데이터가 하나인것
 
--------
+- Field lookups
 
-Field lookups
-
-> 조회 시 특정 조건을 적용시키기 위해 사용
->
-> QuerySet Method(get, filter, exclude) 에 대한 키워드 인수로 사용됨
-
-```
-In [15]: Article.objects.filter(content__contains='!')
-Out[15]: <QuerySet [<Article: first>, <Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
-
-In [16]: Article.objects.filter(pk__gt=1)  # 1보다 크거나 같은
-Out[16]: <QuerySet [<Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
-```
+  > 조회 시 특정 조건을 적용시키기 위해 사용
+  >
+  > QuerySet Method(get, filter, exclude) 에 대한 키워드 인수로 사용됨
+  >
+  > ```
+  > In [15]: Article.objects.filter(content__contains='!')
+  > Out[15]: <QuerySet [<Article: first>, <Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
+  > 
+  > In [16]: Article.objects.filter(pk__gt=1)  # 1보다 크거나 같은
+  > Out[16]: <QuerySet [<Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
+  > ```
 
 --------------
 
-update
+**update**
 
 ```
 # 1번 글 가져와서 수정하려면 
@@ -488,11 +476,11 @@ In [24]: article.title
 Out[24]: 'byebye'
 ```
 
-이렇게 하면 updated_at 수정시간이 변경되었다.
+이렇게 하면 title과 updated_at 수정시간이 변경되었다.
 
 -----
 
-delete
+**delete**
 
 ```
 In [26]: article.delete()
@@ -527,31 +515,23 @@ DoesNotExist: Article matching query does not exist.
 
 ------
 
-Admin site
+### Admin site
 
-Automatic admin interface
-
+> Automatic admin interface
+>
 > 사용자가 아닌 서버의 관리자가 활용하기 위한 페이지
 >
 > django.contrib.auth 모듈에서 제공 
 
 ```
 from django.contrib import admin
-# from . import models
 from .models import Article
 
-# Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
 	list_display = ('pk', 'title', 'content', 'created_at', 'updated_at',)	# list_display : 정해진 클래스 변수명
 
-
-
-admin.site.register(Article, ArticleAdmin)
-
-# admin site에 Article클래스를 register하겠다.
+admin.site.register(Article, ArticleAdmin)   # admin site에 Article, ArticleAdmin클래스를 register하겠다.
 ```
-
-
 
 ```
 $ python manage.py createsuperuser
@@ -564,11 +544,11 @@ Superuser created successfully.
 
 -------
 
-url, view보다 model 먼저함
+### 포인트
 
-model 하고 makemigrations > migrate 함
+##### url, view보다 model 먼저함
 
+**model 하고 makemigrations > migrate 함**
 
-
-settings > django_extensions 등록해야함
+**settings > django_extensions 등록해야함**
 

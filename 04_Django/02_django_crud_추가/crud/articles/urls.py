@@ -1,5 +1,5 @@
-from django.urls import path    # 새로 쓴 거임
-from . import views   # 이것도
+from django.urls import path
+from . import views
 
 app_name = 'articles'
 urlpatterns = [
