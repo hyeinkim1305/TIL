@@ -1,554 +1,634 @@
-# 02_django_model
+[TOC]
 
-### model
+# 01_django_model
+
+## Model
 
 > 웹 어플리케이션의 데이터를 구조화하고 조작하기 위한 도구
->
-> 단일한 데이터에 대한 정보를 가짐 
->
-> 저장된 데이터베이스의 구조
->
-> 각각의 model은 하나의 데이터베이스 테이블에 매핑
->
-> (model != database)
 
-----------------
+**개념**
 
-### 데이터베이스
+- 모델은 단일한 데이터에 대한 정보를 가짐
+- 일반적으로 각각의 **모델(클래스)**는 하나의 데이터베이스 **테이블과 매핑**
+- 모델은 부가적인 메타데이터를 가진 **DB의 구조(layout)를 의미**
 
-> 체계화된 데이터의 모임 
+<br>
 
-- 쿼리
+### Database
 
-  데이터를 조회하기 위한 명령어
+> 체계화된 데이터의 모임 (집합)
 
-- 구조
+**기본 구조**
 
-  스키마
+- `쿼리(Query)`
+  - 데이터를 조회하기 위한 명령어
+  - (주로 테이블형 자료구조에서) 조건에 맞는 데이터를 추출하거나 조작하는 명령어
+- `스키마 (Schema)` —> 뼈대(Structure)
+  - 데이터베이스에서 자료의 구조, 표현 방법, 관계 등을 정의한 구조
+  - 데이터베이스 관리 시스템(DBMS)이 주어진 설정에 따라 데이터베이스 스키마를 생성하며, 데이터베이스 사용자가 자료를 저장, 조회, 삭제, 변경할 때 DBMS는 자신이 생성한 데이터베이스 스키마를 참조하여 명령을 수행
+- `테이블 (Table)` —> 관계(Relation) —> 엑셀의 sheet
+  - 필드(field) : 속성, 컬럼(Column)
+    - 모델 안에 정의한 클래스에서 클래스 변수가 필드가 됨
+  - 레코드(record) : 튜플, 행(Row)
+    - 우리가 ORM을 통해 해당하는 필드에 넣은 데이터(값)
 
-  ​	데이터베이스의 전반적인 자료 구조
+<br>
 
-  테이블 
+------
 
-  ​	필드 / 컬럼 / 속성
-
-  ​	레코드 / 행 / 튜플
-
-  PK (기본키)
-
-  ​	데이터베이스 관리 및 관계 설정시 주요하게 활용됨
-
-----------------------
+<br>
 
 ### ORM
 
->  객체지향프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템(Django-SQL) 간에 데이터를 변환하는 프로그래밍 기술. 
+> 객체-관계 매핑
+
+**개념**
+
+- 객체 지향 프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템간에(Django - SQL)데이터를 변환하는 프로그래밍 기술
+- OOP 프로그래밍에서 RDBMS을 연동할 때, 데이터베이스와 객체 지향 프로그래밍 언어 간의 호환되지 않는 데이터를 변환하는 프로그래밍 기법이다. 
+- Django는 내장 Django ORM을 사용
+
+<br>
+
+**장/단점**
 
 - 장점
-
-  SQL을 잘 알지 못해도 DB조작이 가능
-
-  SQL의 절차적 접근이 아닌 객체 지향적 접근으로 인한 높은 생산성
-
+  - SQL을 몰라도 DB 연동이 가능하다. (SQL 문법을 몰라도 쿼리 조작 가능)
+  - SQL의 절차적인 접근이 아닌 객체 지향적인 접근으로 인해 `생산성`이 증가한다.
+  - ORM은 독립적으로 작성되어 있고, 해당 객체들을 재활용할 수 있다. 
+    - 때문에 모델에서 가공된 데이터를 컨트롤러(view)에 의해 뷰(template)과 합쳐지는 형태로 디자인 패턴을 견고하게 다지는데 유리
 - 단점
+  - ORM 만으로 완전한 서비스를 구현하기 어려운 경우가 있다.
+  - 프로젝트의 복잡성이 커질 경우 설계 난이도가 상승할 수 있다.
 
-  ORM만으로 완전한 서비스를 구현하기 어려운 경우가 있음 
+<br>
 
-------------
+**정리**
 
-### migrations
+- 객체 지향 프로그래밍에서 DB를 편리하게 관리하게 위해 ORM 프레임워크를 도입
+- **"우리는 DB를 객체(object)로 조작하기 위해 ORM을 사용한다."**
 
-> django가 model에 생긴 변화(필드를 추가했다던가 모델을 삭제했다던가 등)를 반영하는 방법
+<br>
 
-##### migration 실행 및 DB 스키마를 다루기 위한 몇 가지 명령어
+**새 프로젝트 시작**
 
-makemigrations **
+> `01_django_model` 폴더 안에서 진행
 
->  model의 변경 사항에 기반해서 새로운 마이그레이션(like 설계도)을 만들 때 사용
->
-> 이때는 실제 DB는 비어있음 
->
-> 중간에 변경사항이 생기면 다시 makemigrations해서 설계도 만들어야함
-
-migrate **
-
-> 위에서 만들어진 설계도들을 (마이그레이션을) DB에 실제로 반영하기 위해 사용
->
-> 모델에서의 변경 사항들과 DB의 스키마가 동기화를 이룸
-
-sqlmigrate
-
-> 마이그레이션에 대한 SQL 구문을 보기 위해 사용
-
-showmigrations
-
-> 프로젝트 전체의 마이그레이션 상태를 확이하기 위해 사용
->
-> 마이그레이션 파일들이 migrate 됐는지 안됐느지 여부를 확인할 수 있음 
-
-##### 반드시 기억해야 할 3단계
-
-> 1. models.py
->
->    model 변경사항 발생
->
-> 2. python manage.py makemigrations
->
->    migrations 파일 생성
->
-> 3. python manage.py migrate
->
->    DB 적용
-
--------
-
-### Database API
-
-> DB와의 대화
->
-> DB를 조작하기 위한 도구
->
-> django가 기본적으로 ORM을 제공함에 따른 것으로 DB를 편하게 조작할 수 있도록 도와줌 
-
-##### DB API 구문
-
-ClassName.Manager.QuerySetAPI
-
-> Article.objects.all()
-
-##### CRUD
-
-> 대부분의 컴퓨터 소프트웨어가 가지는 기본적인 데이터 처리 기능인 Create, Read, Update, Delete 를 묶어서 일컫는 말
-
-**create**
-
+```bash
+$ django-admin startproject crud 
+$ cd crud
+$ python manage.py startapp articles
 ```
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelud (master)
-$ python manage.py runserver
-Watching for file changes with StatReloader
-Performing system checks...
+```python
+# crud/settings.py
 
-System check identified no issues (0 silenced).
+INSTALLED_APPS = [
+    'articles',	
+		...
+]
+```
 
-You have 18 unapplied migration(s). Your project may not work properlytil you apply the migrations for app(s): admin, auth, contenttypes, seons.
-Run 'python manage.py migrate' to apply them.
-March 10, 2021 - 09:22:49
-Django version 3.1.7, using settings 'crud.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CTRL-BREAK.
-[10/Mar/2021 09:22:52] "GET / HTTP/1.1" 200 16351
-[10/Mar/2021 09:22:52] "GET /static/admin/css/fonts.css HTTP/1.1" 304 
-d-webfont.woff HTTP/1.1" 304 0
-[10/Mar/2021 09:22:52] "GET /static/admin/fonts/Roboto-Regular-webfont/1.1" 304 0
-[10/Mar/2021 09:22:52] "GET /static/admin/fonts/Roboto-Light-webfont.w.1" 304 0
-Not Found: /favicon.ico
-[10/Mar/2021 09:22:52] "GET /favicon.ico HTTP/1.1" 404 1970
+<br>
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelter)
-$ python manage.py startapp articles
+**models.py 정의**
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelter)
+```python
+# articles/models.py
+
+class Article(models.Model): # Model class 상속
+    # id는 기본적으로 처음 테이블 생성시 자동으로 만들어진다.
+    title = models.CharField(max_length=10) # 클래스 변수(DB의 필드)
+    content = models.TextField() 
+```
+
+- title과 content은 모델의 필드를 나타냄
+  - 각 **필드**는 클래스 속성으로 지정되어 있으며, 각 **속성**은 각 데이터베이스의 열에 매핑
+
+<br>
+
+**사용 된 필드**
+
+- `CharField(max_length=None, **options)`
+  - 길이의 제한이 있는 문자열을 넣을 때 사용
+  - CharField의 max_length는 필수 인자
+    - **필드의 최대 길이(문자),** 데이터베이스 레벨과 Django의 유효성 검사(값을 검증하는 것)에서 활용
+- `TextField(**options)`
+  - 글자의 수가 많을 때 사용
+
+<br>
+
+------
+
+<br>
+
+## Migrations
+
+>  django가 모델에 생긴 변화(필드를 추가했다던가 모델을 삭제했다던가 등)를 반영하는 방법
+
+<br>
+
+**makemigrations**
+
+> migration 파일은 데이터베이스 스키마를 위한 버전관리 시스템이라 생각하자
+
+- 모델을 변경한 것에 기반한 새로운 migration(설계도, 이하 마이그레이션)만들 때 사용
+- 모델을 활성화 하기 전에 DB 설계도(마이그레이션) 작성
+
+```bash
 $ python manage.py makemigrations
-Migrations for 'articles':
-  articles\migrations\0001_initial.py
-    - Create model Article
+```
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelter)
-$ python manage.py migrate
-Operations to perform:
-  Apply all migrations: admin, articles, auth, contenttypes, sessions
-Running migrations:
-  Applying contenttypes.0001_initial... OK
-  Applying auth.0001_initial... OK
-  Applying admin.0001_initial... OK
-  Applying admin.0002_logentry_remove_auto_add... OK
-  Applying admin.0003_logentry_add_action_flag_choices... OK
-  Applying articles.0001_initial... OK
-  Applying contenttypes.0002_remove_content_type_name... OK
-  Applying auth.0002_alter_permission_name_max_length... OK
-  Applying auth.0003_alter_user_email_max_length... OK
-  Applying auth.0004_alter_user_username_opts... OK
-  Applying auth.0005_alter_user_last_login_null... OK
-  Applying auth.0006_require_contenttypes_0002... OK
-  Applying auth.0007_alter_validators_add_error_messages... OK
-  Applying auth.0008_alter_user_username_max_length... OK
-  Applying auth.0009_alter_user_last_name_max_length... OK
-  Applying auth.0010_alter_group_name_max_length... OK
-  Applying auth.0011_update_proxy_permissions... OK
-  Applying auth.0012_alter_user_first_name_max_length... OK
-  Applying sessions.0001_initial... OK
+- `0001_initial.py` 생성 확인
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelter)
-$ python manage.py sqlmigrate articles 0001
-BEGIN;
---
--- Create model Article
---
-CREATE TABLE "articles_article" ("id" integer NOT NULL PRIMARY KEY AUT, "title" varchar(10) NOT NULL, "content" text NOT NULL);
-COMMIT;
+<br>
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_modelter)
-$ python manage.py showmigrations
-admin
- [X] 0001_initial
- [X] 0002_logentry_remove_auto_add
- [X] 0003_logentry_add_action_flag_choices
-articles
- [X] 0001_initial
-auth
- [X] 0001_initial
- [X] 0002_alter_permission_name_max_length
- [X] 0003_alter_user_email_max_length
- [X] 0004_alter_user_username_opts
- [X] 0005_alter_user_last_login_null
- [X] 0007_alter_validators_add_error_messages
- [X] 0008_alter_user_username_max_length
- [X] 0009_alter_user_last_name_max_length
- [X] 0010_alter_group_name_max_length
- [X] 0011_update_proxy_permissions
- [X] 0012_alter_user_first_name_max_length
-contenttypes
- [X] 0001_initial
- [X] 0002_remove_content_type_name
-sessions
- [X] 0001_initial
+**migrate**
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model
+> 설계도를 실제 DB에 반영하는 과정
+
+- `migrate` 는 `makemigrations` 로 만든 설계도를 실제 `db.sqlite3` DB에 반영한다.
+
+- 모델에서의 변경 사항들과 DB의 스키마가 동기화를 이룬다.
+
+  ```bash
+  $ python manage.py migrate
+  ```
+
+<br>
+
+**sqlmigrate**
+
+- 해당 migrations 설계도가 SQL 문으로 어떻게 해석되어서 동작할지 미리 확인 할 수 있다.
+
+  ```bash
+  $ python manage.py sqlmigrate app_name 0001
+  ```
+
+<br>
+
+**showmigrations**
+
+- migrations 설계도들이 migrate 됐는지 안됐는지 여부를 확인 할 수 있다.
+
+  ```bash
+  $ python manage.py showmigrations
+  ```
+
+
+<br>
+
+**변경사항 반영**
+
+```python
+class Article(models.Model):
+    title = models.CharField(max_length=10)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
+
+```bash
 $ python manage.py makemigrations
-No changes detected
+```
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model
-$ python manage.py makemigrations
-You are trying to add the field 'created_at' with 'auto_now_add=True' t a default; the database needs something to populate existing rows.
+<br>
+
+```bash
+You are trying to add the field 'created_at' with 'auto_now_add=True' to article without a default; the database needs something to populate existing rows.
 
  1) Provide a one-off default now (will be set on all existing rows)
+ 2) Quit, and let me add a default in models.py
+Select an option: 1
+```
+
+- `1` 입력 후 enter (추가된 필드에 대한 default 값 설정)
+
+<br>
+
+```bash
+Please enter the default value now, as valid Python
 You can accept the default 'timezone.now' by pressing 'Enter' or you can provide another value.
 The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
 Type 'exit' to exit this prompt
 [default: timezone.now] >>>
-Migrations for 'articles':
-  articles\migrations\0002_auto_20210310_1040.py
-    - Add field created_at to article
+```
 
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)
+- 그대로 `enter` (django가 timezone.now를 default 함수 값으로 자동 설정)
+
+```bash
 $ python manage.py migrate
-Operations to perform:
-  Apply all migrations: admin, articles, auth, contenttypes, sessions        
-Running migrations:
-  Applying articles.0002_auto_20210310_1040... OK
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)
-$
-$ ^C
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)     
-$ pip install django-extensions
-Collecting django-extensions
-  Downloading django_extensions-3.1.1-py3-none-any.whl (222 kB)
-     |████████████████████████████████| 222 kB 2.2 MB/s
-Installing collected packages: django-extensions
-Successfully installed django-extensions-3.1.1
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)     
-$ python manage.py shell
-Python 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)] on win32       
-Type "help", "copyright", "credits" or "license" for more information.
-(InteractiveConsole)
->>> exit
-Use exit() or Ctrl-Z plus Return to exit
->>> exit()
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)     
-$ python manage.py shell_plus
-# Shell Plus Model Imports
-from articles.models import Article
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-# Shell Plus Django Imports
-from django.core.cache import cache
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.db import transaction
-from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When       
-from django.utils import timezone
-from django.urls import reverse
-from django.db.models import Exists, OuterRef, Subquery
-Python 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)] on win32       
-Type "help", "copyright", "credits" or "license" for more information.
-(InteractiveConsole)
->>> exit
-Use exit() or Ctrl-Z plus Return to exit
->>> exit()
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)     
-$ pip install ipython
-Collecting ipython
-  Downloading ipython-7.21.0-py3-none-any.whl (784 kB)
-     |████████████████████████████████| 784 kB 1.6 MB/s 
-Collecting traitlets>=4.2
-  Using cached traitlets-5.0.5-py3-none-any.whl (100 kB)
-Collecting backcall
-  Using cached backcall-0.2.0-py2.py3-none-any.whl (11 kB)
-Requirement already satisfied: setuptools>=18.5 in c:\users\user\miniconda3\lib\site-packages (from ipython) (50.3.1.post20201107)
-Collecting prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0
-  Downloading prompt_toolkit-3.0.16-py3-none-any.whl (366 kB)
-     |████████████████████████████████| 366 kB 3.2 MB/s 
-Collecting jedi>=0.16
-  Using cached jedi-0.18.0-py2.py3-none-any.whl (1.4 MB)
-Collecting pygments
-  Downloading Pygments-2.8.1-py3-none-any.whl (983 kB)
-     |████████████████████████████████| 983 kB 3.2 MB/s 
-Collecting decorator
-  Using cached decorator-4.4.2-py2.py3-none-any.whl (9.2 kB)
-Collecting colorama; sys_platform == "win32"
-  Using cached colorama-0.4.4-py2.py3-none-any.whl (16 kB)
-Collecting pickleshare
-  Using cached pickleshare-0.7.5-py2.py3-none-any.whl (6.9 kB)
-Collecting ipython-genutils
-  Using cached ipython_genutils-0.2.0-py2.py3-none-any.whl (26 kB)
-Collecting wcwidth
-  Using cached wcwidth-0.2.5-py2.py3-none-any.whl (30 kB)
-Collecting parso<0.9.0,>=0.8.0
-  Using cached parso-0.8.1-py2.py3-none-any.whl (93 kB)
-Installing collected packages: ipython-genutils, traitlets, backcall, wcwidth, prompt-toolkit, parso, jedi, pygments, decorator, colorama, pickleshare, ipython
-Successfully installed backcall-0.2.0 colorama-0.4.4 decorator-4.4.2 ipython-7.21.0 ipython-genutils-0.2.0 jedi-0.18.0 parso-0.8.1 pickleshare-0.7.5 prompt-toolkit-3.0.16 pygments-2.8.1 traitlets-5.0.5 wcwidth-0.2.5
-
-USER@LAPTOP-L0LDBJLT MINGW64 ~/Desktop/TIL_G/04_Django/02_django_model/crud (master)     
-$ python manage.py shell_plus
-# Shell Plus Model Imports
-from articles.models import Article
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-# Shell Plus Django Imports
-from django.core.cache import cache
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.db import transaction
-from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When       
-from django.utils import timezone
-from django.urls import reverse
-from django.db.models import Exists, OuterRef, Subquery
-Python 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)]
-Type 'copyright', 'credits' or 'license' for more information
-IPython 7.21.0 -- An enhanced Interactive Python. Type '?' for help.
-
-In [1]: Article
-Out[1]: articles.models.Article
-
-In [2]: Article.objects.all()
-Out[2]: <QuerySet []>
-
-In [3]: article = Article()
-
-In [4]: article
-Out[4]: <Article: Article object (None)>
-
-In [5]: article.title = 'first'
-
-In [6]: article.title
-Out[6]: 'first'
-
-In [7]: article.content = 'django!'
-
-In [8]: article.content
-Out[8]: 'django!'
-
-In [9]: Article.objects.all()
-Out[9]: <QuerySet []>
-
-In [10]: article.save()
-
-In [11]: article
-Out[11]: <Article: Article object (1)>
 ```
 
-총 3가지 방법
+<br>
 
-```
-# 1번째 방법
-article = Article()
-article.title = ''
-article.content = ''
-article.save()
+`DateTimeField()`
 
-# 2번째 방법 (인스턴스 생성하면서 클래스 인자에 넣어주는거)
-article = Article(title=' ', content=' ')
-article.save()
+- 최초 생성 일자: `auto_now_add=True`
+  - django ORM이 최초 insert(테이블에 데이터 입력)시에만 현재 날짜와 시간으로 갱신(테이블에 어떤 값을 최초로 넣을 때)
+- 최종 수정 일자: `auto_now=True`
+  - django ORM이 save를 할 때마다 현재 날짜와 시간으로 갱신
 
-# 3번째 방법
-Article.objects.create(title=' ', content=' ')
+<br>
 
-```
+**Model 중요 3단계**
 
-article 인스턴스 하나 당 테이플의 튜플 하나라고 생각하면 될듯 
+- `models.py` : 변경사항 발생 (생성 / 수정)
+- `makemigrations` : migration 파일 만들기 (설계도)
+- `migrate` : DB에 적용 (테이블 생성)
 
----------
+<br>
 
-**read (조회)**
+**실제 DB 테이블 확인**
 
-1. all
+- vs code extension - sqlite3 검색 후 설치
 
-   ```
-   In [8]: Article.objects.all()
-   Out[8]: <QuerySet [<Article: first>, <Article: second>, <Article: third>, <Article: 4444>]>
-   ```
+- 테이블을 확인해보면 `articles_article`이라는 이름으로 테이블 생성
 
-2. get
+  - INSTALLED_APPS 중 몇몇은 최소 하나 이상의 DB 테이블을 사용하기 때문에 migrate 와 함께 테이블이 만들어진다.
 
-   ```
-   In [9]: article = Article.objects.get(pk=4)
-   In [10]: article
-   Out[10]: <Article: 4444>
-   ```
+  - 테이블의 이름은 app의 이름과 model 의 이름이 조합(모두 소문자)되어 자동으로 생성된다. (소문자)
 
-   pk로만 조회할 때만 사용한다 (유니크한 값)
+    - `app이름(articles)_소문자 모델이름(article)`
 
-   왜냐하면 객체가 없으면 DoesNotExist 에러 발생
 
-   객체가 여러개일경우 Multiple~ 에러 발생
-
-   위와 같은 특징을 가지고 있기 때문에 unique 혹은 NOT NULL 특징을 가지고 있는 경우에만 사용 가능 (즉 pk로 조회할 때만 사용)
-
-3. filter
-
-   지정된 것을 포함하는 모든 데이터값을 쿼리셋으로 줌
-
-   하나의 쿼리셋에 데이터가 여러개인것
-
-   ```
-   In [13]: Article.objects.filter(content='django!')
-   Out[13]: <QuerySet [<Article: first>, <Article: 5555!>]>
-   ```
-
-   만약 그 요구한 데이터가 1개일경우 
-
-   ```
-   In [14]: Article.objects.filter(title='first')
-   Out[14]: <QuerySet [<Article: first>]>
-   ```
-
-   하나의 쿼리셋에 데이터가 하나인것
-
-- Field lookups
-
-  > 조회 시 특정 조건을 적용시키기 위해 사용
-  >
-  > QuerySet Method(get, filter, exclude) 에 대한 키워드 인수로 사용됨
-  >
-  > ```
-  > In [15]: Article.objects.filter(content__contains='!')
-  > Out[15]: <QuerySet [<Article: first>, <Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
-  > 
-  > In [16]: Article.objects.filter(pk__gt=1)  # 1보다 크거나 같은
-  > Out[16]: <QuerySet [<Article: second>, <Article: third>, <Article: 4444>, <Article: 5555!>]>
-  > ```
-
---------------
-
-**update**
-
-```
-# 1번 글 가져와서 수정하려면 
-In [18]: article = Article.objects.get(pk=1)
-
-In [19]: article
-Out[19]: <Article: first>
-
-In [19]: article
-Out[19]: <Article: first>
-
-In [20]: article.title
-Out[20]: 'first'
-
-In [21]: article.title='byebye'
-
-In [22]: article.title
-Out[22]: 'byebye'
-
-In [23]: article.save()
-
-In [24]: article.title
-Out[24]: 'byebye'
-```
-
-이렇게 하면 title과 updated_at 수정시간이 변경되었다.
-
------
-
-**delete**
-
-```
-In [26]: article.delete()
-Out[26]: (1, {'articles.Article': 1})
-
-In [27]: Article.objects.get(pk=1)
----------------------------------------------------------------------------
-DoesNotExist                              Traceback (most recent call last)
-<ipython-input-27-00adbda49bfd> in <module>
-----> 1 Article.objects.get(pk=1)
-
-~\miniconda3\lib\site-packages\django\db\models\manager.py in manager_method(self, *args, **kwargs)
-     83         def create_method(name, method):
-     84             def manager_method(self, *args, **kwargs):
----> 85                 return getattr(self.get_queryset(), name)(*args, **kwargs)       
-     86             manager_method.__name__ = method.__name__
-     87             manager_method.__doc__ = method.__doc__
-
-~\miniconda3\lib\site-packages\django\db\models\query.py in get(self, *args, **kwargs)   
-    427             return clone._result_cache[0]
-    428         if not num:
---> 429             raise self.model.DoesNotExist(
-    430                 "%s matching query does not exist." %
-    431                 self.model._meta.object_name
-
-DoesNotExist: Article matching query does not exist.
-```
-
-어떤거 삭제할 지 선택하고 delete 하면 됨
-
-여기서 1을 지웠는데 바로 이 상태에서 추가하면 마지막에 추가됨. 1번으로는 추가되지 않음 
+<br>
 
 ------
 
-### Admin site
+<br>
 
-> Automatic admin interface
->
-> 사용자가 아닌 서버의 관리자가 활용하기 위한 페이지
->
-> django.contrib.auth 모듈에서 제공 
+## Database API
 
+> DB를 조작하기 위한 도구
+>
+> django가 기본적으로 orm을 제공함에 따른 것으로 db를 편하게 조작할 수 있도록 도와줌
+
+<br>
+
+**Django shell**
+
+- 일반 파이썬 쉘을 통해서는 장고 프로젝트 환경에 접근할 수 없음
+
+- 그래서 장고 프로젝트 설정이 로딩된 파이썬 쉘을 활용
+
+  ```bash
+  $ pip install ipython django-extensions
+  ```
+
+  ```python
+  # settings.py
+  
+  INSTALLED_APPS = [
+      ...
+      'django_extensions',
+      ...
+  ]
+  ```
+
+  ```bash
+  $ python manage.py shell_plus
+  ```
+
+<br>
+
+**DB API 구문**
+
+> https://docs.djangoproject.com/en/3.1/ref/models/querysets/#queryset-api-reference
+>
+> https://docs.djangoproject.com/en/3.1/topics/db/queries/#making-queries
+
+<img width="1517" alt="Screen Shot 2020-08-19 at 5 12 04 PM" src="https://user-images.githubusercontent.com/18046097/90609518-23395b80-e23f-11ea-8e04-abfc04a709f7.png">
+
+<br>
+
+**`objects` Manager**
+
+> https://docs.djangoproject.com/en/3.1/topics/db/managers/#managers
+>
+> Django 모델에 데이터베이스 쿼리 작업이 제공되는 인터페이스
+
+- Model Manager와 Django Model 사이의 **Query 연산의 인터페이스 역할** 을 해줌
+- 즉, `models.py` 에 설정한 클래스(테이블)을 불러와서 사용할 때 DB와의 interface 역할을 하는 매니저
+- Django는 기본적으로 모든 Django 모델 클래스에 대해 '`objects`' 라는 Manager(django.db.models.Manager) 객체를 자동으로 추가한다.
+- Manager(objects)를 통해 특정 데이터를 조작(메서드)할 수 있다.
+
+<br>
+
+**QuerySet**
+
+> 데이터베이스로부터 데이터를 읽고, 필터를 걸거나 정렬 등을 수행
+>
+> 쿼리(질문)를 DB에게 던져서 글을 읽거나, 생성하거나, 수정하거나, 삭제
+
+- 데이터베이스에서 전달 받은 객체의 목록
+- django orm에서 발생한 자료형
+- objects를 사용하여 복수의 데이터를 가져오는 함수를 사용할 때 반환되는 객체
+- 단일한 객체를 리턴할 때는 테이블(Class)의 인스턴스로 리턴됨
+
+<br>
+
+### CRUD
+
+> 대부분의 컴퓨터 소프트웨어가 가지는 기본적인 데이터 처리 기능인 
+> Create(생성), Read(읽기), Update(갱신), Delete(삭제)를 묶어서 일컫는 말
+>
+> 이러한 4개의 조작을 모두 할 수 없다면 그 소프트웨어는 완전하다고 할 수 없다. 
+>
+> 이들 기능은 매우 기본적이기 때문에, 한 묶음으로 설명되는 경우가 많다.
+>
+> https://ko.wikipedia.org/wiki/CRUD
+
+<br>
+
+### Create
+
+> django shell_plus에서 진행
+
+**데이터 객체를 만드는(생성하는) 3가지 방법**
+
+**첫번째 방식**
+
+- ORM을 쓰는 이유는 DB 조작을 객체 지향 프로그래밍(클래스)처럼 하기 위해
+  - `article = Article()` :  클래스로부터 인스턴스 생성
+  - `article.title` : 해당 인스턴스 변수를 변경
+  - `article.save()` : 인스턴스로 메소드를 호출
+
+```python
+>>> article = Article() 
+>>> article
+<Article: Article object (None)>
+
+>>> article.title = 'first' 
+>>> article.content = 'django!' 
+
+# save 를 하지 않으면 아직 DB에 값이 저장되지 않음
+>>> article
+<Article: Article object (None)>
+
+>>> Article.objects.all()                            
+<QuerySet []>
+
+# save 를 하고 확인하면 저장된 것을 확인할 수 있다
+>>> article.save()
+>>> article
+<Article: Article object (1)>
+>>> Article.objects.all()
+<QuerySet [Article: Article object (1)]>
+
+# 인스턴스인 article을 활용하여 변수에 접근해보자
+>>> article.title
+'first'
+>>> article.content
+'django!'
 ```
+
+<br>
+
+**두번째 방식**
+
+```python
+>>> article = Article(title='second', content='django!!')
+>>> article.save()
+>>> article
+<Article: Article object (2)>
+>>> Article.objects.all()
+<QuerySet [<Article: Article object (1)>, <Article: Article object (2)>]>
+
+# 값을 확인
+>>> article.pk
+2
+>>> article.title
+'second'
+>>> article.content
+'django!!'
+```
+
+<br>
+
+**세번째 방식**
+
+- `create()` 를 사용하면 쿼리셋 객체를 생성하고 저장하는 로직이 한번의 스텝으로 가능
+
+```python
+>>> Article.objects.create(title='third', content='django!')
+<Article: Article object (3)>
+```
+
+<br>
+
+`__str__`
+
+- 모든 모델마다 표준 파이썬 클래스의 메소드인 **str**() 을 정의하여 각각의 object가 사람이 읽을 수 있는 문자열을 반환(return)하도록 한다.
+
+  ```python
+  # articles/models.py
+  
+  class Article(models.Model):
+      title = models.CharField(max_length=10)
+      content = models.TextField()
+      created_at = models.DateTimeField(auto_now_add=True)
+      updated_at = models.DateTimeField(auto_now=True)
+  
+      def __str__(self):
+          return self.title
+  ```
+
+<br>
+
+**`save()`**
+
+> https://docs.djangoproject.com/en/3.1/ref/models/instances/#saving-objects
+
+- `.save()` 메서드 호출을 통해 데이터를 DB에 저장한다.
+
+<br>
+
+### Read
+
+`all()`
+
+> https://docs.djangoproject.com/en/3.1/ref/models/querysets/#all
+
+- `QuerySet` return
+- QuerySet은 리스트는 아니지만 리스트와 거의 비슷하게 동작
+
+```python
+>>> Article.objects.all()
+<QuerySet [<Article: Article object (1)>, <Article: Article object (2)>, <Article: Article object (3)>, <Article: Article object (4)>]>
+get()
+```
+
+<br>
+
+`get()`
+
+>  https://docs.djangoproject.com/en/3.1/ref/models/querysets/#get
+
+- 객체가 없으면 `DoesNotExist` 에러가 나오고 객체가 여러 개일 경우에 `MultipleObjectReturned` 오류를 띄움.
+- 위와 같은 특징을 가지고 있기 때문에 unique 혹은 Not Null 특징을 가지고 있으면(ex. `pk`) 사용할 수 있다.
+
+```python
+>>> article = Article.objects.get(pk=100)
+DoesNotExist: Article matching query does not exist.
+
+>>> Article.objects.get(content='django!')
+MultipleObjectsReturned: get() returned more than one Article -- it returned 2!
+**filter()**
+```
+
+<br>
+
+`filter()`
+
+>  https://docs.djangoproject.com/en/3.1/ref/models/querysets/#filter
+
+- 지정된 조회 매개 변수와 일치하는 객체를 포함하는 새 QuerySet을 반환
+
+  ```python
+  >>> Article.objects.filter(content='django!')
+  <QuerySet [<Article: first>, <Article: fourth>]>
+  
+  >>> Article.objects.filter(title='first')
+  <QuerySet [<Article: first>]>
+  ```
+
+<br>
+
+**Field lookups**
+
+- SQL WHERE 절을 지정하는 방법
+
+- QuerySet 메서드 filter(), exclude() 및 get()에 대한 키워드 인수로 지정
+
+  ```python
+  Article.objects.filter(pk__gt=1)
+  ```
+
+<br>
+
+**The `pk` lookup shortcut**
+
+> https://docs.djangoproject.com/en/3.1/topics/db/queries/#the-pk-lookup-shortcut
+
+- 또한, 우리가 `.get(id=1)` 형태 뿐만 아니라 `.get(pk=1)` 로 사용할 수 있는 이유는(DB에는 id로 필드 이름이 지정 됨에도) `.get(pk=1)` 이`.get(id__exact=1)` 와 동일한 의미이기 때문이다. 
+
+- pk는 `id__exact` 의 shortcut 이다.
+
+  ```python
+  >>> Blog.objects.get(id__exact=14) # Explicit form
+  >>> Blog.objects.get(id=14) # __exact is implied
+  >>> Blog.objects.get(pk=14) # pk implies id__exact
+  ```
+
+<br>
+
+### Update
+
+```python
+>>> article = Article.objects.get(pk=1)
+>>> article.title
+'first'
+
+# 값을 변경하고 저장
+>>> article.title = 'byebye'
+>>> article.save()
+
+# 정상적으로 변경된 것을 확인
+>>> article.title
+'byebye'
+```
+
+<br>
+
+### Delete
+
+```python
+>>> article = Article.objects.get(pk=1)
+
+# 삭제
+>>> article.delete()
+(1, {'articles.Article': 1})
+
+# 다시 1번 글을 찾으려고 하면 없다고 나온다.
+>>> Article.objects.get(pk=1)
+DoesNotExist: Article matching query does not exist.
+```
+
+<br>
+
+---
+
+<br>
+
+## Admin Site
+
+> 사용자가 아닌 서버의 관리자가 활용하기 위한 페이지 
+
+**개념**
+
+- 사용자가 아닌 서버의 관리자가 활용하기 위한 페이지
+-  Article class를 `admin.py` 에 등록하고 관리
+- record 생성 여부 확인에 매우 유용하고 CRUD 로직을 확인하기에 편리하다.
+
+<br>
+
+**관리자 생성**
+
+```bash
+$ python manage.py createsuperuser
+```
+
+- 관리자 계정 생성 후 서버를 실행한 다음 `/admin` 으로 가서 관리자 페이지 로그인
+
+- 모델을 등록하지 않으면 기본적인 사용자 정보만 확인 할 수 있다.
+
+- `admin.py` 로 가서 관리자 사이트에 등록하여 내가 만든 record를 보기 위해서는 Django 서버에 등록
+
+
+<br>
+
+**model 등록**
+
+```python
+# articles/admin.py
+
 from django.contrib import admin
 from .models import Article
 
-class ArticleAdmin(admin.ModelAdmin):
-	list_display = ('pk', 'title', 'content', 'created_at', 'updated_at',)	# list_display : 정해진 클래스 변수명
-
-admin.site.register(Article, ArticleAdmin)   # admin site에 Article, ArticleAdmin클래스를 register하겠다.
+admin.site.register(Article)
 ```
 
-```
-$ python manage.py createsuperuser
-Username (leave blank to use 'user'): admin
-Email address:
-Password:
-Password (again):
-Superuser created successfully.
-```
+<br>
 
--------
+**admin site확인**
 
-### 포인트
+- admin 사이트에 방문해서 우리가 현재까지 작성한 글들을 확인
+- `admin.py` 는 관리자 사이트에 Article 객체가 관리 인터페이스를 가지고 있다는 것을 알려주는 것
+- 이렇게 admin 사이트에 등록된 모습이 어딘가 익숙하다? 
+- 바로 `models.py` 에 정의한 `__str__` 의 형태로 객체가 표현된다.
 
-##### url, view보다 model 먼저함
+<br>
 
-**model 하고 makemigrations > migrate 함**
+**ModelAdmin options**
 
-**settings > django_extensions 등록해야함**
+`list_display`
+
+- admin 페이지에서 우리가 models.py 정의한 각각의 속성(컬럼)들의 값(레코드)를 출력
+
+  ```python
+  # articles/admin.py
+  
+  from django.contrib import admin
+  from .models import Article
+  
+  class ArticleAdmin(admin.ModelAdmin):
+      list_display = ('pk', 'title', 'content', 'created_at', 'updated_at',)
+  
+  admin.site.register(Article, ArticleAdmin)
+  ```
+
+<br>
+
+------
 

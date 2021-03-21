@@ -18,7 +18,7 @@ showmigrations
 #### 2. Model 변경사항 저장하기
 
 ```
-QuerySet
+sqlmigrate
 ```
 
 

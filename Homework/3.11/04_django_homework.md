@@ -17,10 +17,11 @@
    ```
 
 4. ```
-   Post.title='안녕하세요'
-   Post.content='반갑습니다'
-   ```
-
+   my_post.title = "안녕하세요"
+   my_post.content = "반갑습니다"
+   my_post.save()
+```
+   
 5. ```
    posts = Post.objects.all()
    ```

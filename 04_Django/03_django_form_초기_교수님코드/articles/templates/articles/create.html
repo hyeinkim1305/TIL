@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center">New Article</h1>
+  <hr>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% comment %} 제목: <input type="text" name="title"><br>
+    내용: <textarea name="content" id="" cols="30" rows="10"></textarea><br> {% endcomment %}
+    <input type="submit" value="글 작성">
+  </form>
+  <a href="{% url 'articles:index' %}">BACK</a>
+{% endblock content %}

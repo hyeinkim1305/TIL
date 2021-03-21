@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+
+{% block content %}
+  <h1>CREATE</h1>
+  {% comment %} <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+
+  <hr>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      {{ form.title.errors }}
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div>
+      {{ form.content.errors }}
+      {{ form.content.label_tag }}
+      {{ form.content }}
+    </div>
+    <input type="submit">
+  </form>
+
+  <hr>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class='mb-3'>   <!--div로 묶어야 떨어뜨려짐-->
+      {{ field.errors }}
+      {{ field.label_tag }}
+      {{ field }}
+      </div>
+    {% endfor %}
+    <input type="submit">
+  </form> {% endcomment %}
+
+  <hr>
+
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% bootstrap_form form layout='horizontal' %}
+    {% buttons submit='OK' reset="Cancel" %}{% endbuttons %}
+
+    {% comment %} {% for field in form %}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <div class="alert alert-warning" role="alert"><strong>{{ error|escape }}</strong></div>
+        {% endfor %}
+      {% endif %}
+      {{ field.label_tag }}
+      {{ field }}
+    {% endfor %}
+    <input type="submit"> {% endcomment %}
+
+    <!--파일을 받을 때-->>
+    <!--제목: <input type="text" name="title"><br>
+    내용: <textarea name="content" id="" cols="30" rows="10"></textarea><br>
+    이미지: <input type="file" name="image" accept="image/*">
+    <input type="submit">-->
+  </form>
+  <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
