@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+  {% if request.resolver_match.url_name == 'create' %}
+    <h1>New</h1>
+  {% else %}
+    <h1>Update</h1>
+  {% endif %}
+
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' %}
+    {% comment %} {% buttons submit='OK' %}{% endbuttons %}
+    {% buttons reset='Cancel' %}{% endbuttons %} {% endcomment %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">OK</button>
+    {% endbuttons %}
+    {% buttons %}
+        <button type="reset" class="btn btn-danger">Cancel</button>
+    {% endbuttons %}
+  </form>
+
+  <a href="{% url 'movies:index' %}" class="btn btn-warning">Back</a>
+
+{% endblock content %}

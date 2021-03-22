@@ -22,6 +22,12 @@
 
 ** sqlite explorer는 마우스 오른쪽 눌러서 하는거
 
+python -m venv venv   깃배쉬
+
+vscode 켜고 shift ctrl P 눌러서 interpreter venv 로 설정
+
+pip list 해보고 pip install -r requirements.txt 하기
+
 
 
 ## 세부 사항
@@ -955,6 +961,530 @@
   > ```
   >
   > 위 코드를 아래 코드로 바꾼다.
+
+
+
+유저에 관련된 앱 만들고 할 때
+
+```
+$ python manage.py startapp accounts
+settings.py에서 articles밑에 accounts 등록
+python manage.py migrate
+```
+
+```
+프로젝트 > urls.py에 
+path('accounts/', include('accounts.urls')),
+추가
+```
+
+accounts > urls.py 에 
+
+```
+from django.urls import path
+
+app_name = 'accounts'
+urlpatterns = [
+    
+]
+```
+
+쿠팡에서 장바구니에 넣고 검사 켜서 application > sid를 지워보면 장바구니 탭을 새로고침했을 때 장바구니 안에 물품들이 사라진다.
+
+로그인 만들 때
+
+urls.py
+
+```
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+urlpatterns = [
+    path('login/', views.login, name='login'),
+]
+```
+
+views.py
+
+```
+from django.shortcuts import render
+# from django.conrib.auth import 
+from django.contrib.auth.forms import AuthenticationForm
+
+# Create your views here.
+def login(request):		# 세션을 create
+	# get 일때는 login 페이지를 주고,
+	# post 일때는 login 을 하면 됨
+	if request.method == 'POST':
+		pass
+	else:
+		form = AuthenticationForm()		# 인스턴스 생성
+	context = {
+		'form' : form,
+	}
+	return render(request, 'accouts/login.html', context)
+```
+
+login.html
+
+```
+{% extends 'base.html' %}
+{% block content %}
+<h1>로그인</h1>
+<form action="{% url 'accounts:login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+
+{% endblock content %}
+
+
+
+```
+
+여기까지는 로그인 화면 페이지를 보여줌 
+
+이제 session 생성하기 위한 함수 만들어줄것임
+
+views.py
+
+```
+from django.shortcuts import render, redirect
+from django.contrib.auth import login as auth_login		# 세션을 create해줌
+from django.contrib.auth.forms import AuthenticationForm
+
+# Create your views here.
+def login(request):		# 세션을 create
+	# get 일때는 login 페이지를 주고,
+	# post 일때는 login 을 하면 됨
+	if request.method == 'POST':
+		form = AuthenticationForm(request, request.POST)	# request받은 다음에 데이터받음
+		if form.is_valid():
+			# 세션 Create
+			auth_login(request, form.get_user())
+			return redirect('articles:index')
+
+	else:
+		form = AuthenticationForm()		# 인스턴스 생성
+	context = {
+		'form' : form,
+	}
+	return render(request, 'accounts/login.html', context)
+
+```
+
+base.html
+
+div container안에 이것을 추가
+
+```
+<h3>Hello, {{ request.user }}</h3>
+```
+
+이렇게 하고 articles/로 들어가면 Hello, admin이 상단에 뜸. 그리고 쿠키에서 session_id를 지우면 Hello, AnonymousUser가 나타남 
+
+로그아웃
+
+base.html
+
+```
+	<form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <button class="btn btn-secondary">LOGOUT</button>
+    </form>
+```
+
+단순 get요청 방식으로 안되게 
+
+urls.py
+
+```
+path('logout/', views.logout, name='logout'),
+```
+
+views.py
+
+```
+from django.contrib.auth import logout as auth_logout
+def logout(request):
+	if request.method == 'POST':
+		auth_logout(request)
+	return redirect('articles:index')
+```
+
+이거도 method가 POST일때를 조건으로 걸어둬야함
+
+또는
+
+```
+from django.views.decorators.http import require_POST
+@require_POST
+```
+
+이거 넣어서 POST일 때로 제한해줘도 됨
+
+logout은 쿠키에서도 지우고, 데이터베이스에서도 지운다. 두군데에서 지움 ~~!!
+
+
+
+cookie 유효기간 설정하기
+
+```
+# session cookie의 유효기간 설정
+DAY_IN_SECONDS = 86400
+SESSION_COOKIE_AGE = DAY_IN_SECONDS
+```
+
+
+
+
+
+로그인 사용자에 대한 접근 제한
+
+2가지 방법
+
+is_authenticated attribute
+
+=> user에 대해서는 항상 True, AnonymousUser에 대해서는 항상 False
+
+base.html
+
+```
+<h3>Hello, {{ request.user }}</h3>
+    {% if request.user.is_authenticated %}
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">LOGOUT</button>
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">LOGIN</a>
+    {% endif %}
+    
+    
+    {% block content %}
+    {% endblock %}
+```
+
+views.py
+
+이미 로그인을 한 사용자는 로그인 안뜨게 해야함
+
+```
+함수 가장 앞에
+if request.user.is_authenticated:		# T / F
+		# 로그인된 사용자라면
+		return redirect('articles:index')
+```
+
+index.html
+
+```
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Articles</h1>
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'articles:create' %}">[CREATE]</a>
+  {% else %}
+    <a href="{% url 'articles:login' %}">[새 글을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+  
+  <hr>
+  {% for article in articles %}
+    <p>글 번호 : {{ article.pk }}</p>
+    <p>글 제목 : {{ article.title }}</p>
+    <p>글 내용 : {{ article.content }}</p>
+    <a href="{% url 'articles:detail' article.pk %}">[DETAIL]</a>
+    <hr>
+  {% endfor %}
+{% endblock %}
+```
+
+두번째 방법
+
+login reuqired decorator
+
+: 사용자가 로그인 했는지 확인하는 view를 위한 데코레이터
+
+로그인 안했으면 create 페이지로 못가고 로그인 페이지로 리다이렉트 된다.
+
+articles > views.py
+
+```
+from django.contrib.auth.decorators import login_required
+@login_required
+@require_http_methods(['GET', 'POST'])
+def create(request):
+```
+
+accounts > login.html
+
+```
+{% extends 'base.html' %}
+{% block content %}
+<h1>로그인</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+
+{% endblock content %}
+```
+
+accounts > views.py > login 함수
+
+```
+def login(request):		# 세션을 create
+	# get 일때는 login 페이지를 주고,
+	# post 일때는 login 을 하면 됨
+	if request.user.is_authenticated:		# T / F
+		# 로그인된 사용자라면
+		return redirect('articles:index')
+
+
+	if request.method == 'POST':
+		form = AuthenticationForm(request, request.POST)	# request받은 다음에 데이터받음
+		if form.is_valid():
+			# 세션 Create
+			auth_login(request, form.get_user())
+			return redirect(request.GET.get('next') or 'articles:index')
+
+	else:
+		form = AuthenticationForm()		# 인스턴스 생성
+	context = {
+		'form' : form,
+	}
+	return render(request, 'accounts/login.html', context)
+```
+
+next를 넣어준다
+
+
+
+delete를 url로 하고 로그인창이 뜨는데 여기서 로그인하면 에러나는거를 방지
+
+views.py
+
+```
+@require_POST
+def delete(request, pk):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=pk)
+        article.delete()
+    return redirect('articles:index')
+```
+
+authenticated 해줘야함
+
+
+
+user의 crud만들기
+
+urls.py
+
+```
+path('signup/', views.signup, name='signup'),
+```
+
+views.py
+
+```
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
+def signup(request):
+	if request.method = 'POST':
+		pass
+	else:
+		form = UserCreationForm()
+		context = {
+		'form' : form,
+	}
+	return render(request, 'accounts/signup.html', context)
+```
+
+signup.html
+
+```
+{% extends 'base.html' %}
+{% block content %}
+<h1>회원가입</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+
+{% endblock content %}
+
+```
+
+비로그인 상태일 때 회원가입 구조가 보여야함
+
+```
+<a href="{% url 'accounts:signup' %}">SIGNUP</a>
+```
+
+accounts > views.py
+
+```
+def signup(request):
+	if request.user.is_authenticated:		# T / F
+		# 로그인된 사용자라면
+		return redirect('articles:index')
+		
+	if request.method = 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid:
+			user = form.save()		# Usercreationform이 성공적으로 끝나면 리턴은 user
+			# 회원가입 후 바로 로그인 해주려고
+			auth_login(request, user)
+			return redirect('articles:index')
+	else:
+		form = UserCreationForm()
+		context = {
+		'form' : form,
+	}
+	return render(request, 'accounts/signup.html', context)
+```
+
+
+
+user 탈퇴
+
+```
+path('delete/', views.delete, name='delete'),
+
+
+@require_POST
+def delete(request):
+	if request.user.is_authenticated:
+		request.user.delete()
+		return redirect('articles:index')
+```
+
+base.html
+
+```
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css %}
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <h3>Hello, {{ request.user }}</h3>
+    {% if request.user.is_authenticated %}
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">LOGOUT</button>
+      </form>
+      <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="탈퇴">
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">LOGIN</a>
+      <a href="{% url 'accounts:signup' %}">SIGNUP</a>
+    {% endif %}
+    
+    
+    {% block content %}
+    {% endblock %}
+  </div>
+  {% bootstrap_javascript %}
+</body>
+</html>
+```
+
+
+
+update
+
+```
+path('update/', views.update, name='update'),
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+
+```
+
+update.html
+
+```
+{% extends 'base.html' %}
+{% block content %}
+<h1>회원정보수정</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit">
+</form>
+
+{% endblock content %}
+```
+
+base.html
+
+```
+<div class="container">
+    <h3>Hello, {{ request.user }}</h3>
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'accounts:update' %}">[회원정보수정]</a>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">LOGOUT</button>
+      </form>
+```
+
+여기에 update 넣음 
+
+accounts > forms.py
+
+```
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
+
+class CustomUserChangeForm(UserChangeForm):
+
+  class Meta:
+    model = get_user_model()
+    fields = ('email', 'first_name', 'last_name',)
+```
+
+accounts > views.py
+
+```
+from .forms import CustomUserChangeForm
+```
+
+여기까지 하면 이메일, 이름, 성만 수정이 가능하게 됨
+
+accounts > views.py
+
+```
+def update(request):
+	if request.method == 'POST':
+		form = CustomUserChangeForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.asve()
+			return redirect('articles:index')
+	else:
+		form = UserChangeForm()
+	context = {
+		'form' : form,
+	}
+	return render(request, 'accounts/update.html', context)
+```
+
+
 
 
 

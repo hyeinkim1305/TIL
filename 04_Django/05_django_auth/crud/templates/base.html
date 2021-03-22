@@ -11,6 +11,23 @@
 </head>
 <body>
   <div class="container">
+    <h3>Hello, {{ request.user }}</h3>
+    
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'accounts:update' %}">[회원정보수정]</a>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+      </form>
+      <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="탈퇴">
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+      <a href="{% url 'accounts:signup' %}">Signup</a>
+    {% endif %}
+
     {% block content %}
     {% endblock %}
   </div>
