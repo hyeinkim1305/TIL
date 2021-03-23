@@ -1488,6 +1488,14 @@ def update(request):
 
 
 
+** 로그인 로그아웃 이런거 만들때 model이랑 form안건들였어도 migrate해줘야 no such table 오류 안나옴 
+
+
+
+
+
+
+
 ## 프로젝트 세팅
 
 ** models만들고 forms만들고 views 만든다
