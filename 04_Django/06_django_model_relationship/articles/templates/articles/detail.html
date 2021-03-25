@@ -15,4 +15,30 @@
     <button class="btn btn-danger">DELETE</button>
   </form>
   <a href="{% url 'articles:index' %}">[back]</a>
+  <hr>
+  <h4>댓글목록</h4>
+  {{ comments|length }} 개
+  {{ article.comment_set.all|length }} 개
+  {{ comments.count }} 개
+  <ul>
+    {% for comment in comments %}
+      <li>
+        {{ comment }}
+        <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+
+        </form>
+      </li>
+    {% empty %}
+      <p>아직 댓글이 없네요...</p>
+    {% endfor %}
+  </ul>
+  
+  <hr>
+  <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form }}  <!--as_p는 제출버튼옆으로 붙게하려고 뺐음-->
+    <input type="submit">
+  </form>
 {% endblock %}

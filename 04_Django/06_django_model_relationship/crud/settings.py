@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'articles',
     'accounts',
     'bootstrap5',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,5 +123,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DAY_IN_SECONDS = 86400
-SESSION_COOKIE_AGE = DAY_IN_SECONDS
+AUTH_USER_MODEL = 'accounts.User'

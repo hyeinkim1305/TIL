@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_safe, require_http_methods, require_POST
-from .models import Article
-from .forms import ArticleForm
+from django.http import HttpResponse
+from .models import Article, Comment
+from .forms import ArticleForm, CommentForm
 
 # Create your views here.
 @require_safe
@@ -20,7 +21,9 @@ def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            article = form.save()
+            article = form.save(commit=False)       # 이부분 수정함
+            aticle.user = request.user
+            article.save()
             return redirect('articles:detail', article.pk)
     else:
         form = ArticleForm()
@@ -30,14 +33,18 @@ def create(request):
     return render(request, 'articles/create.html', context)
 
 
+
 @require_safe
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    comment_form = CommentForm()
+    comments = article.comment_set.all()
     context = {
         'article': article,
+        'comment_form' : comment_form, 
+        'comments' : comments,
     }
     return render(request, 'articles/detail.html', context)
-
 
 
 @require_POST
@@ -65,4 +72,28 @@ def update(request, pk):
     }
     return render(request, 'articles/update.html', context)
         
+@require_POST
+def comments_create(request, pk):
+    if request.user.is_authenticated:
+        # 이미 deatil함수에서 get 부분 받고있음
+        article = get_object_or_404(Article, pk=pk)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)       # 텀을 준다
+            comment.article=article
+            comment.save()
+            return redirect('articles:detail', article.pk)
+        context = {
+            'comment_form' : comment_form,
+            'article' : article,
+        }
+        return render(request, 'articles/detail.html', context)
+    return redirect('accounts:login')
 
+
+@require_POST
+def comments_delete(request, article_pk, comment_pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=comment_pk)
+        comment.delete()
+    return redirect('articles:detail', article_pk)

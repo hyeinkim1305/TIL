@@ -1490,7 +1490,77 @@ def update(request):
 
 ** 로그인 로그아웃 이런거 만들때 model이랑 form안건들였어도 migrate해줘야 no such table 오류 안나옴 
 
+-------------------------------------
 
+댓글기능 구현 
+
+댓글 모델은 articles 게시글 폴더의 models.py에 만든다
+
+articles> models.py
+
+```
+# 댓글은 articles의 model에 구조 만듬
+class Commment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)          # 참조하는 모델의 소문자 넣어준다
+    content = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):      # shell_plus에서 댓글이 보이게 하기 위함
+        return self.content
+
+```
+
+변경사항이 생겼으므로 makemigrations , migrate하기
+
+shell_plus
+
+```
+In [1]: comment = Comment()
+
+In [2]: comment.content = '댓글1'
+
+In [3]: Article.objects.create(title='제목1', cont 
+   ...: ent='내용1')
+Out[3]: <Article: Article object (2)>
+
+In [4]: Article.objects.all()
+Out[4]: <QuerySet [<Article: Article object (1)>, <Article: Article object (2)>]>
+
+In [5]: article = Article.objects.get(pk=1)        
+
+In [6]: article
+Out[6]: <Article: Article object (1)>
+
+In [7]: comment.article=article
+
+In [8]: comment.article
+Out[8]: <Article: Article object (1)>
+
+In [9]: comment.save()
+
+In [10]: comment.pk
+Out[10]: 1
+
+In [1]: article = Article.objects.get(pk=1)
+
+In [2]: article
+Out[2]: <Article: Article object (1)>
+
+In [3]: article.comment_set.all()
+Out[3]: <QuerySet [<Comment: 댓글1>, <Comment: 댁슬2>]>
+
+In [4]: comments = article.comment_set.all()
+
+In [5]: comments
+Out[5]: <QuerySet [<Comment: 댓글1>, <Comment: 댁슬2>]>
+```
+
+articles>models.py와 forms.py 수정 (댓글부분 추가)
+
+articles > views.py 댓글 함수 추가
+
+articles > detail.html에서 댓글 부분 추가
 
 
 

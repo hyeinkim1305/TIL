@@ -1,0 +1,70 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css%}
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">{{ request.user }}</a>
+                </li>
+                <li class="nav-item">
+                  {% comment %} <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">로그아웃</a> {% endcomment %}
+                  <form action="{% url 'accounts:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn bnt-primary">로그아웃</button>
+                  </form>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'accounts:update' %}">회원수정</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'accounts:password' %}">비밀번호 변경</a>
+                </li>
+                <li class="nav-item">
+                  {% comment %} <a class="nav-link active" aria-current="page" href="{% url 'accounts:delete' %}">탈퇴</a> {% endcomment %}
+                  <form action="{% url 'accounts:delete' %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn bnt-primary">탈퇴</button>
+                  </form>
+                </li>
+
+              {% else %}
+
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'accounts:signup' %}">회원가입</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">로그인</a>
+                </li>
+
+              {% endif %}
+                
+              
+              
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    {% block content %}
+      
+
+    {% endblock content %}
+  </div>
+  {% bootstrap_javascript%}
+</body>
+</html>
+
+
