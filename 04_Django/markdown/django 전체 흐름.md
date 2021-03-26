@@ -1606,3 +1606,42 @@ $ git remote add origin2 내주소
 => 다른 사람에게 클론 받은걸 내꺼에 올릴때
 ```
 
+
+
+##### branch로 작업할 때
+
+```python
+# 1. a가 기본설정 코드 작성해서 커밋, 푸쉬
+# 2. 원격저장소의 멤버로 b를 추가
+# 3. b는 그대로 클론해서 가져옴
+# 4. a는 회원가입 기능 작성
+git branch <feature/signup>
+git switch ~
+코드 수정
+git add .
+git commit -m "회원가입 기능 구현"
+# 5. b는 로그인 기능 작성
+git branch <feature/login>
+git switch <branch name>
+코드 수정
+git add .
+git commit -m "회원가입 기능 구현"
+# 6. master로 합칠때
+<a>
+git switch master
+git merge feature/signup
+git push origin master		# 회원가입코드가 반영됨
+<b>
+git switch master
+git pull origin master		# 원격저장소에 master를 그대로 가져옴
+git merge faeture/login		# login까지 하나로 합쳐짐 
+git push origin master  	# 원격저장소에 올린다
+
+# 7. a가 로그인 기능이 반영된 걸 가지고 올 때
+git pull origin master		# 이제 다 싱크가 맞춰진것 
+```
+
+
+
+
+
