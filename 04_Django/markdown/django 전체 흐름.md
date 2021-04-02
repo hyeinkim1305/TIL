@@ -1641,7 +1641,42 @@ git push origin master  	# 원격저장소에 올린다
 git pull origin master		# 이제 다 싱크가 맞춰진것 
 ```
 
+```
+<branch>
+git branch 브랜치이름
+git switch 브랜치이름
+(하나의 기능이 구현되엇을때 add, commit을 남겨서 덩어리 묶어주는게 좋다)
+git push origin 브랜치이름 (브랜치이름의 원격저장소로 업로드)
+(master에서)
+git pull origin master
+gir merge aclass
+git add .
+git commit -m "merge class"
+git push origin master
+```
 
 
 
 
+
+
+
+
+
+## 헷갈리는거 정리
+
+##### 1. 1 : N 모델
+
+```
+1:N에서 1은 article N은 comment라고 했을 때, comment모델에 article foreignkey를 넣는다. 이때 comment클래스 모델에서 article참고는 comment.article이런 식으로 하면 되고, article에서 comment참고할 때는 article.comment_set.all() 이렇게 역참조가 되는것!!
+```
+
+##### 2. M : N 모델
+
+| user : article                                         | article : like_users        |
+| ------------------------------------------------------ | --------------------------- |
+| 1 : N                                                  | M : N                       |
+| 참조 > article.user.~                                  | 참조 > article.like_users ~ |
+| 역참조 > user.article_set  (유저가 작성한 모든 게시글) | 역참조 > user.article_set ~ |
+
+이렇게 역참조일때 호출 방식이 겹치게 된다. 따라서 related_name으로 이름을 바꿔준다. user.like_articles.all 이런 식으로 ~@!
