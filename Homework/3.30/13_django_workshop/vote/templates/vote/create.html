@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="bg-white mt-5 p-5 rounded bg-gradient" style="height: 700px; width: 100%;">
+  
+    <h1 class="text-center">Vote Create</h1>
+    <form action="" method="POST" class="form-control" >
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="투표 생성">
+    
+    </form>
+  </div>
+
+
+{% endblock content %}
+
+
+
+
+
