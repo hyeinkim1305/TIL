@@ -185,7 +185,7 @@ Out[27]: (1, {'users.User': 1})
 11)
 
 ```sql
-In [31]: User.objects.order_by('-balance')[:5]
+In [31]: User.objects.order_by('-balance')[:4]
 Out[31]: SELECT "users_user"."id",
        "users_user"."first_name",
        "users_user"."last_name",
@@ -195,10 +195,10 @@ Out[31]: SELECT "users_user"."id",
        "users_user"."balance"
   FROM "users_user"
  ORDER BY "users_user"."balance" DESC
- LIMIT 5
+ LIMIT 4
 
 Execution time: 0.000000s [Database: default]
-<QuerySet [<User: User object (70)>, <User: User object (32)>, <User: User object (55)>, <User: User object (73)>, <User: User object (45)>]>
+<QuerySet [<User: User object (70)>, <User: User object (32)>, <User: User object (55)>, <User: User object (73)>]>
 ```
 
 12)

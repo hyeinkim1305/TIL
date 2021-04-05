@@ -24,7 +24,7 @@ if request.user in article.like_users.all
 
 ```
 (a) user_pk
-(b) followers ?
+(b) followings
 (c) filter
 (d) remove
 (e) add

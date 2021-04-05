@@ -265,6 +265,7 @@ save()
           'comments': comments,
       }
       return render(request, 'articles/detail.html', context)
+  ```
 ```
   
   ```html
@@ -283,7 +284,7 @@ save()
     <hr>
     ...
   {% endblock %}
-  ```
+```
 
 <br>
 

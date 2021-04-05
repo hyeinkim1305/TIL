@@ -4,8 +4,6 @@
 
 ## 1. SQL 개념
 
-> https://challonge.com/ko/dashboard.html
->
 > https://www.sqlitetutorial.net/
 >
 > SQL(StructuredQueryLanguage)는 관계형 데이터베이스 관리시스템(RDBMS)의데이터를 관리하기 위해 설계된 특수 목적의 프로그래밍 언어이다.

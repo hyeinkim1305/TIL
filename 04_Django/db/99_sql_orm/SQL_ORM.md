@@ -186,6 +186,7 @@ In [11]: article = User.objects.get(pk=101)
 
    ```python
    # orm
+   User.objects.all().count()
    ```
 
    ```sql
@@ -397,7 +398,7 @@ In [11]: article = User.objects.get(pk=101)
 Out[40]: <QuerySet [<User: No.99-성우진>, <User: No.48- 
    이보람>, <User: No.100-김재현>, <User: No.5-차영환>, <User: No.24-권숙자>, <User: No.92-박미경>, <User: No.61-고
    우진>, <User: No.46-김명자>, <User: No.38-심준호>, <User: No.60-김은영>]>
-   ```
+     ```
    
    ```sql
    -- sql
