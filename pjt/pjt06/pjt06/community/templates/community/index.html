@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1 class=text-center>Reviews</h1>
+  {% for review in reviews %}
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4>NO. {{ review.pk }}</h4>
+        <a href="{% url 'community:detail' review.pk %}" class="text-decoration-none">{{ review.title }}</a><br>
+      </div>
+      {{ review.created_at }}
+    </div>
+    <hr>
+  {% endfor %}
+ 
+
+{% endblock content %}
+
+
+
+
+
