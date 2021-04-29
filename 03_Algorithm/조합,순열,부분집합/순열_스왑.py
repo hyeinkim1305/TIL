@@ -11,3 +11,6 @@ def perm(idx):
             # 원상복귀
             arr[idx], arr[i] = arr[i], arr[idx]
 perm(0)
+
+
+

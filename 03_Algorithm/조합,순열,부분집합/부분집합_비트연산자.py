@@ -7,3 +7,4 @@ for i in range(1<<n):   # 1<<n : 부분집합의 개수
             print(arr[j], end=", ")
     print()
 print()
+

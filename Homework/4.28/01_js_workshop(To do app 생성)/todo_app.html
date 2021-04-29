@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do App</title>
+</head>
+<body>
+  <form action="#">
+    <input type="text">
+    <button>Add</button>
+  </form>
+  <ul></ul>
+
+  <script>
+    const myForm = document.querySelector('form')
+    const myInput = document.querySelector('input')
+
+    const alertMessage = function (){
+      alert('공백이 아닌 값을 입력하시요')
+    }
+
+    function addTodo (event) {
+      event.preventDefault()
+        
+      const li = document.createElement('li')
+      li.innerText = myInput.value
+
+      const ul = document.querySelector('ul')
+      ul.appendChild(li)
+
+      event.target.reset()
+    }
+
+    if (myInput == ""){
+      myForm.addEventListener('submit', alertMessage)
+    }else{
+      myForm.addEventListener('submit', addTodo) 
+    }
+  </script>
+  
+</body>
+</html>
