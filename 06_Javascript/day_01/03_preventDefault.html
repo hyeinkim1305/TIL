@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>preventDefault</title>
+	<style>
+    body {
+      height: 10000px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 1. checkbox -->
+  <input type="checkbox" id="my-checkbox">
+  <hr>
+
+  <!-- 2. submit -->
+  <form action="/articles/" id="my-form">
+    <input type="text">
+    <input type="submit" value="제출!">
+  </form>
+  <hr>
+
+  <!-- 3. link -->
+  <a href="https://google.com/" target="_blank" id="my-link">GoToGoogle</a>
+  <hr>
+  
+  <script>
+
+    // 1. 체크박스 비활성화
+    const checkBox = document.querySelector('#my-checkbox')
+    checkBox.addEventListener('click', function (event){
+      event.preventDefault()
+    })
+
+    // 2. 제출눌렀을 때 이동하는거 막겠다 & 인풋 삭제
+    const formTag = document.querySelector('#my-form')
+    formTag.addEventListener('submit', function (event){
+      // console.log(event)   // 이때는 articles로 이동함
+      event.preventDefault()
+      event.target.reset()    // 제출했을 때 인풋 데이터 삭제
+    })
+
+    // 3. 클릭한 웹페이지로 이동 못하게!
+    const aTag = document.querySelector('#my-link')
+    aTag.addEventListener('click', function (event){
+      // console.log(event)
+      event.preventDefault()
+    })
+
+    // 4. 스크롤의 이벤트는 막을 수 없다.
+    document.addEventListener('scroll', function (event) {
+      // console.log(event)
+      // console.log(event.cancelable)   // False로 콘솔에 나오면 막을 수 없는 이벤트라는 것을 알림
+      event.preventDefault()
+    })
+  </script>
+</body>
+</html>
