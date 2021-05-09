@@ -86,7 +86,7 @@
     body.appendChild(ul)
 
     ul.append(li1, li2, li3) 
-    // ul.appendChild(li1, li2, li3) 
+    // ul.appendChild(li1, li2, li3)    // 하나만 들어감
 
     //2-4. Delete
     // removeChild
@@ -98,15 +98,15 @@
     // body.remove()
 
     //2-5. Element Styling
-    // li1.style.cursor = 'pointer'
-    // li2.style.color = 'blue'
+    li1.style.cursor = 'pointer'      // 진하게됨
+    li2.style.color = 'blue'
     // li3.style.background = 'red'
 
     // setAttribute
-    // li3.setAttribute('id', 'king')
+    li3.setAttribute('id', 'king')
 
     // getAttribute
-    // const getAttr = li1.getAttribute('style')
+    const getAttr = li1.getAttribute('style')
     // const getAttr2 = li3.getAttribute('style')
     // console.log(getAttr)
     // console.log(getAttr2)
