@@ -1,0 +1,47 @@
+# 01_Vue_Practice
+
+
+
+![image-20210506174720237](01_Vue_Practice.assets/image-20210506174720237.png)
+
+### Code
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat API</title>
+  
+</head>
+<body>
+  <div id="app">
+    <img v-bind:src="imgSrc" alt="">
+    <button v-on:click="getCat">get Cat</button>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        imgSrc: '',
+      },
+      methods: {
+        getCat: function () {
+          const API_URL = 'https://api.thecatapi.com/v1/images/search'
+          axios.get(API_URL)
+            .then(response => {
+              this.imgSrc = response.data[0].url
+            })
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>
+```
+

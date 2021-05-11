@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <select v-model="selected">
+      <option value="all">전체</option>
+      <option value="progress">진행중</option>
+      <option value="finished">완료</option>
+    </select>
+
+    <input type="text" v-model="content">
+    <button v-on:click="addTodo">+</button>
+    <ul>
+      <li v-for="todo in todoList" :key="todo.date">
+        <input type="checkbox" :checked="todo.isCompleted" @click="toggleTodo(todo)">
+        <span :class="{ completed: todo.isCompleted }">{{ todo.content }}</span>
+      </li>
+    </ul>
+    <hr>
+    <button v-on:click="deleteTodo">완료된 할 일 지우기</button>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        content: '',
+        todos: [],
+        status: 'all',
+      },
+      methods: {
+        addTodo: function() {
+          const todo = {
+            content: this.content,
+            isCompleted: false,
+            date: new Date().getTime(),
+          }
+          this.todos.push(todo)
+
+        },
+        toggleTodo: function (todo) {
+          todo.isCompleted = !todo.isCompleted
+        }
+      },
+      computed: {
+        todoList: function() {
+          return this.todos.filter(todo => {
+            if (this.status === 'progress') {
+              return !todo.isCompleted
+            }
+            if (this.status === 'completed') {
+              return todo.isCompleted
+            }
+            return true
+          })
+        }
+      }
+    }
+    
+    )
+
+
+  </script>
+</body>
+</html>
