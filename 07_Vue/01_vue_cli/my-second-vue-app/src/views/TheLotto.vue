@@ -2,7 +2,7 @@
   <div>
     <h2>로또 번호 추첨</h2>
     <button @click="getLottoNums">로또 번호 추첨!</button>
-    <!-- <p>{{ $route.params }}</p> -->
+    <p>로또 번호 개수 {{ $route.params.lottoNum }} 개 추첨</p>
     <p>{{ selectedLottoNums }}</p>
 
 
