@@ -6,7 +6,7 @@
         <button @click="deleteTodo(todo)" class="todo-btn">X</button>
       </li>
     </ul>
-    <button @click="getTodos">Get Todos</button>
+    <!-- <button @click="getTodos">Get Todos</button> -->
   </div>
 </template>
 
@@ -21,10 +21,18 @@ export default {
     }
   },
   methods: {
+    setToken: function() {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
     getTodos: function () {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/todos/'
+        url: 'http://127.0.0.1:8000/todos/',
+        headers: this.setToken()
       })
         .then((res) => {
           console.log(res)
@@ -37,7 +45,8 @@ export default {
     deleteTodo: function (todo) {
       axios({
         method: 'delete',
-        url: `http://127.0.0.1:8000/todos/${todo.id}/`
+        url: `http://127.0.0.1:8000/todos/${todo.id}/`,
+        headers: this.setToken()
       })
         .then((res) => {
           console.log(res)
@@ -52,11 +61,12 @@ export default {
         ...todo,
         completed: !todo.completed
       }
-
+      // DB에 적용하기 위해 
       axios({
         method: 'put',
         url: `http://127.0.0.1:8000/todos/${todo.id}/`,
         data: todoItem,
+        headers: this.setToken(),
       })
         .then((res) => {
           console.log(res)
@@ -65,9 +75,14 @@ export default {
         })
       },
     },
-  // created: function () {
-  //   this.getTodos()
-  // }
+    // vue instance 생성되자마자 실행됨
+  created: function () {
+    if (localStorage.getItem('jwt')) {
+      this.getTodos()
+    } else {
+      this.$router.push({name: 'Login'})
+    }
+  }
 }
 </script>
 
